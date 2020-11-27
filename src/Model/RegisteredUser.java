@@ -1,4 +1,4 @@
-package model;
+package Model;
 
 public class RegisteredUser extends User{
 	private String name;

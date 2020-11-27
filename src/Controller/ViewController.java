@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on origin/master
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -82,3 +83,10 @@ public class ViewController {
 		ViewController test1 = new ViewController(test);
 	}
 }
+=======
+package Controller;
+
+public class ViewController {
+
+}
+>>>>>>> a7ac787 Reverted folder renames

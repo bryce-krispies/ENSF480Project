@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,11 +6,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import model.Movie;
-import model.RegisteredUser;
-import model.Seat;
-import model.Showtime;
-import model.Theatre;
+import Model.Movie;
+import Model.RegisteredUser;
+import Model.Seat;
+import Model.Showtime;
+import Model.Theatre;
 
 
 public class DBManager {
