@@ -13,8 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+//TODO: Change class to extends JFrame
 public class RegisterGUI {
 	
+	//TODO: Remove FRAME_WIDTH and FRAME_HEIGHT
 	private static final int FRAME_WIDTH = 380;
 	private static final int FRAME_HEIGHT = 250;
 	   
@@ -68,7 +70,7 @@ public class RegisterGUI {
 	  	  		}
 	  	  		
   	  			int i = 0;
-  	  			//SEND all inputs
+  	  			//TODO: Send all inputs back to viewController, and replace i for an actual viewController response
   	  			if(i == 0) {
   	  				JOptionPane.showMessageDialog(null, "Successfully registered");
   	  				frame.dispose();

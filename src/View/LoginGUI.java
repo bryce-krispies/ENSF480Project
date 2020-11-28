@@ -11,15 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+//TODO: Change class to extends JFrame
 public class LoginGUI {
-	
-	private static final int FRAME_WIDTH = 400;
-	private static final int FRAME_HEIGHT = 100;
 	   
-	public static void render() 
+	public LoginGUI(int width, int height) 
 	{
 	      JFrame frame = new JFrame("Login User");
-	      frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+	      frame.setSize(width, height);
 	      frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	      frame.setLocationRelativeTo(null);
 	      
@@ -43,6 +41,7 @@ public class LoginGUI {
 	      inputArea.add(passwordField);
 	      frame.getContentPane().add(BorderLayout.CENTER, inputArea);
 	      
+	      //TODO: Maybe change how action listener is added
 	      loginButton.addActionListener(new ActionListener(){
 	    	  @Override
 		        public void actionPerformed(ActionEvent e) {
@@ -51,6 +50,7 @@ public class LoginGUI {
 	    			  return;
 	    		  }
 	    		  
+	    		  //TODO: Change i into an actual response from viewController
 	    		  int i = 0;
 	    		  if(i == 0) {
 	    			  frame.dispose();

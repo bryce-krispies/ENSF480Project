@@ -1,10 +1,16 @@
+package Controller;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import View.*;
 
 public class ViewController {
 	
 	private MainMenuGUI mainMenu;
 	private RefundTicketGUI refundTicket;
+	private LoginGUI loginMenu;
+	private MoviesGUI moviesMenu;
 	
 	public ViewController(MainMenuGUI gui) {
 		this.mainMenu = gui;
@@ -18,7 +24,7 @@ public class ViewController {
 	private class LoginButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Create login GUI here
+			loginMenu = new LoginGUI(400, 100);
 			
 			mainMenu.updateLoginView("nolanchan1@gmail.com");
 		}
@@ -28,8 +34,7 @@ public class ViewController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Create view movies GUI here
-			
-			System.out.println("VIEWMOVIES");
+			moviesMenu = new MoviesGUI();
 		}
 	}
 	
@@ -52,8 +57,6 @@ public class ViewController {
 			System.out.println("VIEWCART");
 		}
 	}
-	
-	
 	
 	//Refund GUI Listeners
 	private class RefundButtonListener implements ActionListener{

@@ -1,5 +1,9 @@
 package View;
 
-public class ShowtimesGUI {
+import javax.swing.JFrame;
+
+public class ShowtimesGUI extends JFrame{
 
 }
+
+

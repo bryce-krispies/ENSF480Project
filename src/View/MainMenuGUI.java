@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,6 +26,7 @@ public class MainMenuGUI extends JFrame{
 		super("Ticket Registration Application");
 		setSize(width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		loggedIn = false;
 		
 		JPanel loginGUI = new JPanel();
@@ -61,8 +64,6 @@ public class MainMenuGUI extends JFrame{
 		
 		loginGUI.add(buttonPanel1);
 		loginGUI.add(buttonPanel2);
-		
-		
 
 		add(loginGUI);
 		setVisible(true);
