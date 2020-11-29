@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -12,22 +11,22 @@ import Model.Showtime;
 
 public class MoviesGUI extends JFrame{
 	
-	Movie[] movies;
-	Movie selectedMovie;
-	Showtime selectedShowtime;
+	private Movie[] movies;
+	private Movie selectedMovie;
+	private Showtime selectedShowtime;
 	
-	JList<String> movieNameList;
-	JList<String> showtimeList;
-	JList<String> seatList;
-	JTextArea output;
-	JButton createTicketButton;
-
+	private JList<String> movieNameList;
+	private JList<String> showtimeList;
+	private JList<String> seatList;
+	private JTextArea output;
+	private JButton createTicketButton;
+	
 	public MoviesGUI() {
 		super("Catalogue");
 		
-		moviesInitialize();
+		moviesInitialize(); //TODO Replace this line with a database retriever
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         
         String[] movieNames = new String[movies.length];
@@ -62,7 +61,6 @@ public class MoviesGUI extends JFrame{
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
         createTicketButton = new JButton("Create Ticket");
-        createTicketButton.addActionListener(new CreateTicketHandler());
         createTicketButton.setEnabled(false);
         
         JPanel topHalf = new JPanel();
@@ -85,7 +83,7 @@ public class MoviesGUI extends JFrame{
         pack();
         setVisible(true);
 	}
-	
+	 
     class MovieSelectionHandler implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
@@ -143,7 +141,7 @@ public class MoviesGUI extends JFrame{
 			}
 		}
     }
-    
+  
     class SeatSelectionHandler implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
@@ -155,14 +153,8 @@ public class MoviesGUI extends JFrame{
 			}
 		}
     }
-    
-    class CreateTicketHandler implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("Ticket: " +movieNameList.getSelectedValue() +" at " 
-					+showtimeList.getSelectedValue() +" in seat " +seatList.getSelectedValue());
-		}
-    }
+ 
+    public void addCreateTicketListener(ActionListener a) { createTicketButton.addActionListener(a); }
     
 	//TODO: Remove this function
 	void moviesInitialize() {
@@ -183,10 +175,19 @@ public class MoviesGUI extends JFrame{
 		}
 		
 	}
+
+	public Movie[] getMovies() { return movies; }
+	public Movie getSelectedMovie() { return selectedMovie; }
+	public Showtime getSelectedShowtime() { return selectedShowtime; }
+	public JList<String> getMovieNameList() { return movieNameList; }
+	public JList<String> getShowtimeList() { return showtimeList; }
+	public JList<String> getSeatList() { return seatList; }
+	public JTextArea getOutput() { return output; }
+	public JButton getCreateTicketButton() { return createTicketButton; }
 	
-	void setMovies(Movie[] database) {
-		movies = database;
-	}
+	public void setMovies(Movie[] database) { movies = database; }
+	public void setSelectedMovie(Movie selectedMovie) { this.selectedMovie = selectedMovie; }
+	public void setSelectedShowtime(Showtime selectedShowtime) { this.selectedShowtime = selectedShowtime; }
 }
 
 

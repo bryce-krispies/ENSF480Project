@@ -5,14 +5,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import View.*;
 
 public class ViewController {
 	
+	private TRS ticketSystem;
 	private MainMenuGUI mainMenu;
 	private RefundTicketGUI refundTicket;
+	private CartGUI viewCart;
 	private LoginGUI loginMenu;
 	private MoviesGUI moviesMenu;
+	private TicketPaymentGUI payTicket;
+	private RegisterGUI registerMenu;
 	
 	//Temp variable for testing
 	private boolean loggedIn;
@@ -21,8 +30,9 @@ public class ViewController {
 	//the same purchase
 	private ArrayList<String> prevVouchers;
 	
-	public ViewController(MainMenuGUI gui) {
-		this.mainMenu = gui;
+	public ViewController() {
+		ticketSystem = new TRS(this);
+		mainMenu = new MainMenuGUI(570, 150);
 		
 		mainMenu.addLoginListener(new LoginButtonListener());
 		mainMenu.addViewMoviesListener(new ViewMoviesButtonListener());
@@ -30,16 +40,14 @@ public class ViewController {
 		mainMenu.addViewCartListener(new ViewCartButtonListener());
 	}
 	
-	//Main menu listener classes
+	//Main Menu GUI Listeners
 	private class LoginButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			loginMenu = new LoginGUI(400, 100);
+			loginMenu = new LoginGUI();
 			
-			//TODO: Get login username from loginMenu after logging in
-			mainMenu.updateLoginView("nolanchan1@gmail.com");
-			
-			loggedIn = true;
+			loginMenu.addLoginListener(new LoginListener());
+			loginMenu.addRegisterListener(new RegisterButtonListener());
 		}
 	}
 	private class ViewMoviesButtonListener implements ActionListener{
@@ -47,6 +55,8 @@ public class ViewController {
 		public void actionPerformed(ActionEvent e) {
 			//Create view movies GUI here
 			moviesMenu = new MoviesGUI();
+			
+			moviesMenu.addCreateTicketListener(new CreateTicketListener());
 		}
 	}
 	private class RefundTicketButtonListener implements ActionListener{
@@ -71,6 +81,68 @@ public class ViewController {
 	}
 	
 	
+	//Login GUI Listeners
+	private class LoginListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+	  		  if(loginMenu.getEmailField().getText().length() < 1 || loginMenu.getPasswordField().getPassword().length < 1) {
+				  JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
+				  return;
+			  }
+			  
+			  //TODO: Change i into an actual response from viewController
+			  int i = 0;
+			  if(i == 0) {
+//					//TODO: Get login username from loginMenu after logging in
+//					mainMenu.updateLoginView("nolanchan1@gmail.com");
+//					
+//					loggedIn = true;
+				  loginMenu.dispose();
+			  } else {
+				  JOptionPane.showMessageDialog(null, "Wrong email or password", "Error", JOptionPane.ERROR_MESSAGE);
+			  }
+		}
+	}
+	private class RegisterButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			registerMenu = new RegisterGUI();
+			registerMenu.addRegisterListener(new RegisterListener());
+		}
+	}
+	
+	
+	//Register GUI Listeners
+	public class RegisterListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+	  		if(registerMenu.getEmailField().getText().length() < 1 || registerMenu.getPasswordField().getPassword().length < 1 || registerMenu.getCardNumField().getText().length() < 1 || 
+	  			registerMenu.getCVVField().getText().length() < 1 || registerMenu.getExpiryDateField().getText().length() < 1 || registerMenu.getAddressField().getText().length() < 1) {
+	  			JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
+	  			return;
+	  		}
+	  		
+			int i = 0;
+			//TODO: Send all inputs back to viewController, and replace i for an actual viewController response
+			if(i == 0) {
+				JOptionPane.showMessageDialog(null, "Successfully registered");
+				registerMenu.dispose();
+			} else {
+				JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	
+	//Movies GUI Listeners
+	public class CreateTicketListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Ticket: " +moviesMenu.getMovieNameList().getSelectedValue() +" at " 
+					+moviesMenu.getShowtimeList().getSelectedValue() +" in seat " +moviesMenu.getSeatList().getSelectedValue());
+		}
+	}
+
 	
 	//Refund GUI Listeners
 	private class RefundButtonListener implements ActionListener{
@@ -125,7 +197,6 @@ public class ViewController {
 	}
 	
 	
-	
 	//View Cart Button Listeners
 	private class ProceedButtonListener implements ActionListener{
 		@Override
@@ -152,7 +223,6 @@ public class ViewController {
 			viewCart.dispatchEvent(new WindowEvent(viewCart, WindowEvent.WINDOW_CLOSING));
 		}
 	}
-	
 	
 	
 	//TicketPaymentGUI Listeners
@@ -199,10 +269,7 @@ public class ViewController {
 	}
 	
 	
-	
-	
 	public static void main(String [] args) {
-		MainMenuGUI test = new MainMenuGUI(570, 150);
-		ViewController test1 = new ViewController(test);
+		ViewController test = new ViewController();
 	}
 }
