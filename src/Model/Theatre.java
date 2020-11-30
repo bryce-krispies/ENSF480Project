@@ -25,5 +25,4 @@ public class Theatre {
     public String getName() {
         return name;
     }
-
 }

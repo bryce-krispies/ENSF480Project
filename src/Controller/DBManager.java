@@ -1,5 +1,9 @@
 package Controller;
 
-public class DBManager {
+import Model.Theatre;
 
+public class DBManager {
+	public DBManager(Theatre theatre) {
+		
+	}
 }

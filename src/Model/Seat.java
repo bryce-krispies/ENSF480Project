@@ -1,3 +1,4 @@
+
 public class Seat {
     public enum type {
         forRegUser, forEveryone

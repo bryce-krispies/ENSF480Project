@@ -45,5 +45,4 @@ public class Movie {
     public boolean forMembers() {
         return true;
     }
-
 }
