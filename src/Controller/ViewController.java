@@ -4,25 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import View.*;
 
 public class ViewController {
 	
-	private TRS ticketSystem;
+	private TRS system;
 	private MainMenuGUI mainMenu;
-	
-	private LoginGUI loginMenu;
-	private RegisterGUI registerMenu;
-	private MoviesGUI moviesMenu;
-	private TicketPaymentGUI payTicket;
 	private RefundTicketGUI refundTicket;
 	private CartGUI viewCart;
+	private LoginGUI loginMenu;
+	private MoviesGUI moviesMenu;
+	private TicketPaymentGUI payTicket;
+	private RegisterGUI registerMenu;
 	
 	//Temp variable for testing
 	private boolean loggedIn;
@@ -32,7 +27,7 @@ public class ViewController {
 	private ArrayList<String> prevVouchers;
 	
 	public ViewController() {
-		ticketSystem = new TRS(this);
+		system = new TRS(this);
 		mainMenu = new MainMenuGUI(570, 150);
 		
 		mainMenu.addLoginListener(new LoginButtonListener());
@@ -40,7 +35,6 @@ public class ViewController {
 		mainMenu.addRefundTicketListener(new RefundTicketButtonListener());
 		mainMenu.addViewCartListener(new ViewCartButtonListener());
 	}
-	
 	
 	//Main Menu GUI Listeners
 	private class LoginButtonListener implements ActionListener{
@@ -55,8 +49,8 @@ public class ViewController {
 	private class ViewMoviesButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moviesMenu = new MoviesGUI();
-
+			moviesMenu = new MoviesGUI(system.getMovieDatabase());
+			
 			moviesMenu.addCreateTicketListener(new CreateTicketListener());
 		}
 	}
@@ -83,24 +77,23 @@ public class ViewController {
 	
 	
 	//Login GUI Listeners
-	private class LoginListener implements ActionListener{ //TODO Write
+	private class LoginListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 	  		  if(loginMenu.getEmailField().getText().length() < 1 || loginMenu.getPasswordField().getPassword().length < 1) {
 				  JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
 				  return;
 			  }
-			  //TODO: Change i into an actual response from viewController
-			  int i = 0;
-			  if(i == 0) {
-//					//TODO: Get login username from loginMenu after logging in
-//					mainMenu.updateLoginView("nolanchan1@gmail.com");
-//					
-//					loggedIn = true;
+			  
+	  		  boolean result = system.login(loginMenu.getEmailField().getText(), new String(loginMenu.getPasswordField().getPassword()));
+	  		  
+			  if(result) {
+				  mainMenu.updateLoginView(loginMenu.getEmailField().getText());
 				  loginMenu.dispose();
-			  } else {
-				  JOptionPane.showMessageDialog(null, "Wrong email or password", "Error", JOptionPane.ERROR_MESSAGE);
+				  return;
 			  }
+			  
+			  JOptionPane.showMessageDialog(null, "Wrong email or password", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	private class RegisterButtonListener implements ActionListener{
@@ -113,7 +106,7 @@ public class ViewController {
 	
 	
 	//Register GUI Listeners
-	public class RegisterListener implements ActionListener { //TODO Write
+	public class RegisterListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 	  		if(registerMenu.getEmailField().getText().length() < 1 || registerMenu.getPasswordField().getPassword().length < 1 || registerMenu.getCardNumField().getText().length() < 1 || 
@@ -122,24 +115,36 @@ public class ViewController {
 	  			return;
 	  		}
 	  		
-			int i = 0;
-			//TODO: Send all inputs back to viewController, and replace i for an actual viewController response
-			if(i == 0) {
-				JOptionPane.showMessageDialog(null, "Successfully registered");
+	  		boolean result = system.register(registerMenu.getEmailField().getText(), new String(registerMenu.getPasswordField().getPassword()), 
+	  							registerMenu.getCardNumField().getText(), registerMenu.getCVVField().getText(), 
+	  							registerMenu.getExpiryDateField().getText(), registerMenu.getAddressField().getText());
+	  		
+			if(result) {
+				mainMenu.updateLoginView(registerMenu.getEmailField().getText());
 				registerMenu.dispose();
-			} else {
-				JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+				loginMenu.dispose();
+				return;
 			}
+			
+			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
 	
 	//Movies GUI Listeners
-	public class CreateTicketListener implements ActionListener { //TODO Write
+	public class CreateTicketListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Ticket: " +moviesMenu.getMovieNameList().getSelectedValue() +" at " 
-					+moviesMenu.getShowtimeList().getSelectedValue() +" in seat " +moviesMenu.getSeatList().getSelectedValue());
+			boolean result = system.addTicketToCart(moviesMenu.getMovieNameList().getSelectedValue(), 
+								moviesMenu.getShowtimeList().getSelectedValue(), moviesMenu.getSeatList().getSelectedValue());
+			
+			if(result) {
+				JOptionPane.showMessageDialog(null, "Successfully added to cart");
+				moviesMenu.dispose();
+				return;
+			}
+			
+			JOptionPane.showMessageDialog(null, "Sorry, ticket could not be added to cart", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -226,7 +231,7 @@ public class ViewController {
 	
 	
 	//TicketPaymentGUI Listeners
-	private class SubmitVoucherButtonListener implements ActionListener{  //TODO Write
+	private class SubmitVoucherButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String voucher = payTicket.getVoucher();
@@ -257,7 +262,7 @@ public class ViewController {
 			payTicket.updateTotalDue(newTotal);
 		}
 	}
-	private class PayButtonListener implements ActionListener{  //TODO Write
+	private class PayButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//TODO: Add ticket to database and remove item from shopping cart

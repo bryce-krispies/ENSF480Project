@@ -1,30 +1,18 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
-import View.MoviesGUI.MovieSelectionHandler;
 
 public class RegisterGUI extends JFrame {
 	
@@ -38,7 +26,6 @@ public class RegisterGUI extends JFrame {
 	
 	private static final int FRAME_WIDTH = 380;
 	private static final int FRAME_HEIGHT = 250;
-	
 	
 	public RegisterGUI(){
 		super("Register");
@@ -81,48 +68,6 @@ public class RegisterGUI extends JFrame {
 	    add(BorderLayout.CENTER, inputArea);
 		
 		setVisible(true);
-	}
-	
-	
-	public RegisterGUI(int g) {
-//		super("Register");
-//
-//		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-//		setLayout(new BorderLayout());
-//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//		setLocationRelativeTo(null);
-//        
-//		
-//        JPanel topHalf = new JPanel();
-//        topHalf.setLayout(new BoxLayout(topHalf, BoxLayout.PAGE_AXIS));
-//		topHalf.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-//		JPanel userInfoContainer = new JPanel(new GridLayout(1,1));
-//		userInfoContainer.setBorder(BorderFactory.createTitledBorder("User Info"));
-//		JPanel paymentInfoContainer = new JPanel(new GridLayout(1,1));
-//		paymentInfoContainer.setBorder(BorderFactory.createTitledBorder("Payment Info"));
-//        topHalf.add(userInfoContainer);
-//        topHalf.add(paymentInfoContainer);
-//        
-//	    JLabel emailLabel = new JLabel("Enter Email");
-//	    emailField = new JTextField(10);
-//        userInfoContainer.add(emailLabel);
-//        userInfoContainer.add(emailField);
-//        JLabel passwordLabel = new JLabel("Enter Password");
-//	    passwordField = new JPasswordField(10);
-//	    userInfoContainer.add(passwordLabel);
-//        userInfoContainer.add(passwordField);
-//        
-//        
-//        
-//		
-//	    JPanel buttonBar = new JPanel();
-//	    registerButton = new JButton("Register");
-//	    buttonBar.add(registerButton);
-//	    
-//	    add(BorderLayout.CENTER, topHalf);
-//	    add(BorderLayout.SOUTH, buttonBar);
-//	    
-//		setVisible(true);
 	}
 		
 	public void addRegisterListener(ActionListener a) { registerButton.addActionListener(a); }
