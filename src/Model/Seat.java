@@ -33,20 +33,12 @@ public class Seat {
         return ticket;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
     public void reserveSeat() {
-        isAvilable = true;
+        isAvilable = false;
     }
 
     public void freeSeat() {
-        isAvilable = false;
+        isAvilable = true;
     }
 
 }
