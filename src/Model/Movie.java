@@ -46,8 +46,8 @@ public class Movie {
     }
 
 
-    public boolean forMembers(boolean isRegisterdUser) {
-        if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)
+    public boolean forMembers() {
+        if (LocalDateTime.now().isBefore(releaseDate))
             return true;
         return false;
     }

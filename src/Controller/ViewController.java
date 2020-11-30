@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import Model.Movie;
 import View.*;
 
 public class ViewController {
@@ -49,7 +50,22 @@ public class ViewController {
 	private class ViewMoviesButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moviesMenu = new MoviesGUI(system.getMovieDatabase());
+			
+			ArrayList<Movie> movieDatabase;
+			
+			if(system.getIsRegistered()) {
+				movieDatabase = system.getMovieDatabase();
+			}
+			else {
+				movieDatabase = new ArrayList<Movie>();
+				for(Movie m : system.getMovieDatabase()) {
+					if(!m.forMembers()) {
+						movieDatabase.add(m);
+					}
+				}
+			}
+			
+			moviesMenu = new MoviesGUI(movieDatabase, system.getIsRegistered());
 			
 			moviesMenu.addCreateTicketListener(new CreateTicketListener());
 		}
@@ -125,7 +141,8 @@ public class ViewController {
 				return;
 			}
 			
-			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, "
+					+ "or your credit card does not exist or doesn't have enough funds", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -271,6 +288,7 @@ public class ViewController {
 			payTicket.dispatchEvent(new WindowEvent(payTicket, WindowEvent.WINDOW_CLOSING));
 		}
 	}
+	
 	
 	public MainMenuGUI getMainMenu() {
 		return mainMenu;

@@ -16,6 +16,8 @@ import Model.Seat;
 
 public class MoviesGUI extends JFrame{
 	
+	private boolean isRegistered;
+	
 	private ArrayList<Movie> movies;
 	private Movie selectedMovie;
 	private Showtime selectedShowtime;
@@ -26,9 +28,10 @@ public class MoviesGUI extends JFrame{
 	private JTextArea output;
 	private JButton createTicketButton;
 	
-	public MoviesGUI(ArrayList<Movie> movieDatabase) {
+	public MoviesGUI(ArrayList<Movie> movieDatabase, boolean isRegistered) {
 		super("Catalogue");
 		
+		this.isRegistered = isRegistered;
 		movies = movieDatabase;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,6 +40,7 @@ public class MoviesGUI extends JFrame{
         for(int i = 0; i < movies.size(); i++) {
         	movieNames[i] = movies.get(i).getName();
         }
+        
         movieNameList = new JList<String>(movieNames);
         movieNameList.addListSelectionListener(new MovieSelectionHandler());
         JScrollPane movieNameListPanel = new JScrollPane(movieNameList);
@@ -106,7 +110,6 @@ public class MoviesGUI extends JFrame{
 					}
 				}
 
-				//TODO Movies::forMembers()
 				if(selectedMovie.getShowTime() == null) {
 					showtimeList.setModel(new DefaultListModel<String>());
 				}
@@ -152,12 +155,27 @@ public class MoviesGUI extends JFrame{
 					}
 				}
 				
-				//TODO Filter only registered
-				newSeatListData = new String[selectedShowtime.getSeatList().size()];
-				int i = 0;
-				for(Seat s : selectedShowtime.getSeatList()) {
-					newSeatListData[i] = s.getID();
-					i++;
+				if(isRegistered) {
+					newSeatListData = new String[selectedShowtime.getSeatList().size()];
+					int i = 0;
+					for(Seat s : selectedShowtime.getSeatList()) {
+						newSeatListData[i] = s.getID();
+						i++;
+					}
+				}
+				else {
+					ArrayList<Seat> unregisteredUserSeats = new ArrayList<Seat>();
+					for(Seat s : selectedShowtime.getSeatList()) {
+						if(s.getEnumType() == Seat.type.forEveryone) {
+							unregisteredUserSeats.add(s);
+						}
+					}
+					newSeatListData = new String[unregisteredUserSeats.size()];
+					int i = 0;
+					for(Seat s : unregisteredUserSeats) {
+						newSeatListData[i] = s.getID();
+						i++;
+					}
 				}
 
 				seatList.setListData(newSeatListData);

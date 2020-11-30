@@ -24,7 +24,7 @@ public class TRS {
 	private PaymentController payCont;
 	
 	public TRS(ViewController viewCont) {
-		isRegistered = true;
+		isRegistered = false;
 		user = new User();
 		theatre = new Theatre("Scotiabank Theatre", 50);
 		dbMan = new DBManager(theatre); //Load database
@@ -51,11 +51,11 @@ public class TRS {
 		
 		User registeredUser = dbMan.verifyLogin(email, password);
 		
-		if(registeredUser != null) {//login successful
-			Cart previousCart = user.getCart();
+		if(registeredUser != null) {
+			//Cart previousCart = user.getCart();
 			//Transfer cart
 			user = registeredUser;
-			user.setCart(previousCart);
+			//user.setCart(previousCart);
 			
 //			if(true/* If today's date is past 1 year since the registered user's last payment date */) {
 //				int choice = JOptionPane.showConfirmDialog(null, 
@@ -68,7 +68,7 @@ public class TRS {
 //				}
 //			}
 			
-			viewCont.getMainMenu().updateLoginView(user.getName());
+			//viewCont.getMainMenu().updateLoginView(user.getName());
 			isRegistered = true;
 			
 			return true;
@@ -79,26 +79,18 @@ public class TRS {
 	
 	public boolean register(String email, String password, String cardNumber, String cvv, String expiryDate, String address) {
 		
-		//Check in database for email, or cardNumber
+		User registeredUser = dbMan.verifyRegistration(email, cardNumber);
 		
-		if(false /* If email or card number already registered in database */) {
+		if(registeredUser == null) {
 			return false;
 		}
 		
-		if(false /* If cardNumber does not have sufficient funds to pay registration fee */) {
-			return false;
-		}
-		
-		//registration successful
-		
-		//Set user variable
-		
-		
-		//isRegistered = true;
-		
-		return true;
+		return login(email, password);
 	}
 	
+	public boolean getIsRegistered() {
+		return isRegistered;
+	}
 	
 
 }
