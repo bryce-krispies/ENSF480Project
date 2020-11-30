@@ -11,7 +11,7 @@ public class Showtime {
     public Showtime(LocalDateTime time) {
         this.time = time;
         isFull = false;
-        seats = new ArrayList<Seat>(100);
+        seats = new ArrayList<Seat>(20);
     }
 
     public Movie getMovie() {

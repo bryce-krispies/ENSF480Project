@@ -10,9 +10,9 @@ public class Seat {
 
     private Ticket ticket;
 
-    public Seat(Ticket ticket, String id, type t) {
+    public Seat(Ticket ticket, String id, type t, boolean isAvilable) {
         this.ticket = ticket;
-
+        isAvilable = this.isAvilable;
         this.id = id;
         this.seatType = t;
     }
