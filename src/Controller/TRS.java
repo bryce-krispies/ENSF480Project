@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Model.Movie;
 import Model.Seat;
 import Model.Showtime;
@@ -69,9 +71,23 @@ public class TRS {
 	}
 	
 	public boolean login(String email, String password) {
-		int i = 0;
-		if(i == 0) {//login successful
-			//Set user variable as well
+		
+		//Check in database for email and password pair
+		
+		if(true) {//login successful
+			//Set user variable
+			
+			if(true/* If today's date is past 1 year since the registered user's last payment date */) {
+				int choice = JOptionPane.showConfirmDialog(null, 
+								"It seems you haven't payed your yearly subscription. Want to renew?", "NOTICE", JOptionPane.YES_NO_OPTION);
+				if(choice == JOptionPane.YES_OPTION) {
+					//Update paymentDate
+					//Subtract subscription amount from user's credit card
+				} else {
+					return false;
+				}
+			}
+			
 			return true;
 		}
 		
@@ -80,14 +96,22 @@ public class TRS {
 	}
 	
 	public boolean register(String email, String password, String cardNumber, String cvv, String expiryDate, String address) {
-		int i = 0;
-		if(i == 0) {//registration successful
-			//Set user variable as well
-			return true;
+		
+		//Check in database for email, or cardNumber
+		
+		if(false /* If email or card number already registered in database */) {
+			return false;
 		}
 		
-		//login unsuccessful (email is already taken, or cardNumber already taken)
-		return false;
+		if(false /* If cardNumber does not have sufficient funds to pay registration fee */) {
+			return false;
+		}
+		
+		//registration successful
+		
+		//Set user variable
+		
+		return true;
 	}
 
 }
