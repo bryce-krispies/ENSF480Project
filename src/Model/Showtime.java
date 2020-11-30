@@ -15,6 +15,13 @@ public class Showtime {
         isFull = false;
         seats = new ArrayList<Seat>(20);
     }
+    
+    public Showtime(LocalDateTime time, int seatNo) {
+        this.time = time;
+        isFull = false;
+        seats = new ArrayList<Seat>(seatNo);
+    }
+
 
     public Movie getMovie() {
         return movie;
