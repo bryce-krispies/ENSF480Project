@@ -4,7 +4,9 @@ import java.util.ArrayList;
 public class Movie {
     private String name;
     private LocalDateTime releaseDate;
-    private String genre; // change to enum
+
+    private String genre;
+
     private String synopsis;
     private ArrayList<Showtime> showTimes;
 
@@ -32,8 +34,8 @@ public class Movie {
     }
 
     public ArrayList<Showtime> getShowTime() {
-
-        // add the logic for ord user vs reg user
+        if (LocalDateTime.now().isBefore(releaseDate))
+            return null;
         return showTimes;
     }
 
@@ -41,8 +43,10 @@ public class Movie {
         this.showTimes = showTimes;
     }
 
-    // Fix this
-    public boolean forMembers() {
-        return true;
+
+    public boolean forMembers(boolean isRegisterdUser) {
+        if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)
+            return true;
+        return false;
     }
 }

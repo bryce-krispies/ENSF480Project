@@ -38,13 +38,13 @@ public class Showtime {
     public void setSeats() {
         int i = 0;
         for (; i < (seats.size() * 0.9); i++) {
-            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forEveryone);
+            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forEveryone, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
 
         for (; i < seats.size(); i++) {
-            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser);
+            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }

@@ -13,7 +13,7 @@ public class Seat {
 
     public Seat(Ticket ticket, String id, type t, boolean isAvilable) {
         this.ticket = ticket;
-        isAvilable = this.isAvilable;
+        this.isAvilable = isAvilable;
         this.id = id;
         this.seatType = t;
     }
