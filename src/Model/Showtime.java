@@ -1,3 +1,5 @@
+package Model;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -24,6 +26,10 @@ public class Showtime {
 
     public ArrayList<Seat> getSeatList() {
         return seats;
+    }
+    
+    public void setSeatList(ArrayList<Seat> seats) {
+        this.seats = seats;
     }
 
     // Might not need this
