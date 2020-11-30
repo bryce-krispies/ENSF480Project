@@ -16,12 +16,13 @@ public class ViewController {
 	
 	private TRS ticketSystem;
 	private MainMenuGUI mainMenu;
-	private RefundTicketGUI refundTicket;
-	private CartGUI viewCart;
+	
 	private LoginGUI loginMenu;
+	private RegisterGUI registerMenu;
 	private MoviesGUI moviesMenu;
 	private TicketPaymentGUI payTicket;
-	private RegisterGUI registerMenu;
+	private RefundTicketGUI refundTicket;
+	private CartGUI viewCart;
 	
 	//Temp variable for testing
 	private boolean loggedIn;
@@ -40,6 +41,7 @@ public class ViewController {
 		mainMenu.addViewCartListener(new ViewCartButtonListener());
 	}
 	
+	
 	//Main Menu GUI Listeners
 	private class LoginButtonListener implements ActionListener{
 		@Override
@@ -53,9 +55,8 @@ public class ViewController {
 	private class ViewMoviesButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Create view movies GUI here
 			moviesMenu = new MoviesGUI();
-			
+
 			moviesMenu.addCreateTicketListener(new CreateTicketListener());
 		}
 	}
@@ -82,14 +83,13 @@ public class ViewController {
 	
 	
 	//Login GUI Listeners
-	private class LoginListener implements ActionListener{
+	private class LoginListener implements ActionListener{ //TODO Write
 		@Override
 		public void actionPerformed(ActionEvent e) {
 	  		  if(loginMenu.getEmailField().getText().length() < 1 || loginMenu.getPasswordField().getPassword().length < 1) {
 				  JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
 				  return;
 			  }
-			  
 			  //TODO: Change i into an actual response from viewController
 			  int i = 0;
 			  if(i == 0) {
@@ -113,7 +113,7 @@ public class ViewController {
 	
 	
 	//Register GUI Listeners
-	public class RegisterListener implements ActionListener {
+	public class RegisterListener implements ActionListener { //TODO Write
 		@Override
 		public void actionPerformed(ActionEvent e) {
 	  		if(registerMenu.getEmailField().getText().length() < 1 || registerMenu.getPasswordField().getPassword().length < 1 || registerMenu.getCardNumField().getText().length() < 1 || 
@@ -135,7 +135,7 @@ public class ViewController {
 	
 	
 	//Movies GUI Listeners
-	public class CreateTicketListener implements ActionListener {
+	public class CreateTicketListener implements ActionListener { //TODO Write
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Ticket: " +moviesMenu.getMovieNameList().getSelectedValue() +" at " 
@@ -226,7 +226,7 @@ public class ViewController {
 	
 	
 	//TicketPaymentGUI Listeners
-	private class SubmitVoucherButtonListener implements ActionListener{
+	private class SubmitVoucherButtonListener implements ActionListener{  //TODO Write
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String voucher = payTicket.getVoucher();
@@ -257,7 +257,7 @@ public class ViewController {
 			payTicket.updateTotalDue(newTotal);
 		}
 	}
-	private class PayButtonListener implements ActionListener{
+	private class PayButtonListener implements ActionListener{  //TODO Write
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//TODO: Add ticket to database and remove item from shopping cart
