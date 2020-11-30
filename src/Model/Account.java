@@ -1,6 +1,12 @@
-public class Account {
-    private float balance;
 
-    public void updateBalance() {
+public class Account {
+    private double balance;
+
+    public Account(double balance) {
+        this.balance = balance;
+    }
+
+    public void updateBalance(double amountToUpdate) {
+        balance += amountToUpdate;
     }
 }
