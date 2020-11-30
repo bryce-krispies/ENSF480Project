@@ -41,7 +41,6 @@ public class Movie {
         this.showTimes = showTimes;
     }
 
-    // Fix this
     public boolean forMembers(boolean isRegisterdUser) {
         if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)
             return true;
