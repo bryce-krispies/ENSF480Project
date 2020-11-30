@@ -7,10 +7,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
 import Model.Theatre;
+import Model.Ticket;
+import Model.User;
 import Model.Movie;
 
 public class DBManager {
@@ -23,15 +28,32 @@ public class DBManager {
 	final String seatsDB = "Seats.db";
 
 	public DBManager(Theatre theatre) {
+		ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
+		tempMovies.add(new Movie("Batman", LocalDateTime.of(2020, 11, 29, 22, 25), "Comedy", "A bat struggles to act human"));
+		tempMovies.add(new Movie("Manbat", LocalDateTime.of(2020, 12, 5, 11, 35), "Documentary", "A human struggles to act like a bat"));
+		tempMovies.add(new Movie("Scream", LocalDateTime.of(2020, 11, 30, 1, 50), "Sci-Fi", "AAAAAAAAAAAAAAAAAH!"));
 
+		int j = 0;
+		for (Movie m : tempMovies) {
+			ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
+			theseShowtimes.add(new Showtime(LocalDateTime.now().plusHours((long)(Math.random() * (12 - 2 + 1) + 2)), 9)); //TODO Fix timing logic (what if number occurs twice?)
+			// and then lets init the seats for these showtimes.
+			
+			for (Showtime s : theseShowtimes) {
+				ArrayList<Ticket> tickets = new ArrayList<Ticket>(9);
+				for(int i = 0; i < 9; i++) {
+					Ticket ticket = new Ticket(Integer.toString(j++), 12.00);
+					tickets.add(ticket);
+				}
+				s.setTickets(tickets);
+				s.setSeats();
+			}
+			m.setShowtime(theseShowtimes);
+		}
+
+		theatre.setMovies(tempMovies);
 	}
 
-	public static void main(String args[]) {
-		// DBManager debug here!
-
-	}
-
-	@SuppressWarnings("serial")
 	DBManager() {
 		boolean testing = true;
 		// if using sql, connect to db here.
@@ -47,22 +69,23 @@ public class DBManager {
 					"118 1 Ave NE"));
 			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
 			tempTheatres.add(new Theatre("Chinook", 500));
-			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
+//			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
 			ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
 			tempMovies.add(new Movie("Batman", null, "Comic", "A bat struggles to act human"));
 			tempMovies.add(new Movie("Manbat", null, "Documentary", "A human struggles to act like a bat"));
 			tempMovies.add(new Movie("Scream", null, "boo.", "AAAAAAAAAAAAAAAAAH!"));
-			
-			for(Movie m : tempMovies) {
+
+			for (Movie m : tempMovies) {
 				ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-				theseShowtimes.add(new Showtime(null,20));
-				//and then lets init the seats for these showtimes.
-				for(Showtime s : theseShowtimes) {
+				theseShowtimes.add(new Showtime(null, 20));
+				// and then lets init the seats for these showtimes.
+				for (Showtime s : theseShowtimes) {
 					s.setSeats();
 				}
 				m.setShowtime(theseShowtimes);
 			}
-
+			
+			tempTheatres.get(0).setMovies(tempMovies);
 
 			writeFile(RUsDB, tempRegisteredUsers);
 			writeFile(theatresDB, tempTheatres);
@@ -70,6 +93,12 @@ public class DBManager {
 		}
 	}
 
+	
+	private User verifyLogin(String email, String password) {
+		HashMap<Map<String, String>, RegisteredUser> rUsers = new HashMap<Map<String, String>, RegisteredUser>();
+		return rUsers.get(new Map<String, String>(email, password));
+	}
+	
 	@SuppressWarnings("unchecked")
 	ArrayList<RegisteredUser> importRU() {
 		// open RUs file, import all registered users into here.
@@ -88,11 +117,11 @@ public class DBManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	ArrayList<Showtime> importShowtimes() { //currently does nothing, as showtimes are tied to a movie.
+	ArrayList<Showtime> importShowtimes() { // currently does nothing, as showtimes are tied to a movie.
 		return (ArrayList<Showtime>) readFile(showtimesDB);
 	}
 
-	ArrayList<Seat> importSeats() { //currently does nothing as seats are tied to a showtime.
+	ArrayList<Seat> importSeats() { // currently does nothing as seats are tied to a showtime.
 		ArrayList<Seat> result = new ArrayList<Seat>();
 		return result;
 	}
@@ -109,7 +138,7 @@ public class DBManager {
 		writeFile(RUsDB, movies);
 	}
 
-	void setShowtimes(ArrayList<Showtime> showtimes) { //currently this does nothing, due to the showtimes being 
+	void setShowtimes(ArrayList<Showtime> showtimes) { // currently this does nothing, due to the showtimes being
 		writeFile(RUsDB, showtimes);
 	}
 

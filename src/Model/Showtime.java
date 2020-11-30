@@ -9,19 +9,15 @@ public class Showtime {
     private ArrayList<Seat> seats;
     private LocalDateTime time;
     private boolean isFull;
-
-    public Showtime(LocalDateTime time) {
-        this.time = time;
-        isFull = false;
-        seats = new ArrayList<Seat>(20);
-    }
+    private int numOfCustomers;
     
     public Showtime(LocalDateTime time, int seatNo) {
         this.time = time;
         isFull = false;
-        seats = new ArrayList<Seat>(seatNo);
+        numOfCustomers = seatNo;
+        seats = new ArrayList<Seat>(numOfCustomers);
+        tickets = new ArrayList<Ticket>(numOfCustomers);
     }
-
 
     public Movie getMovie() {
         return movie;
@@ -50,17 +46,21 @@ public class Showtime {
 
     public void setSeats() {
         int i = 0;
-        for (; i < (seats.size() * 0.9); i++) {
+        for (; i < (numOfCustomers * 0.9); i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forEveryone, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
 
-        for (; i < seats.size(); i++) {
+        for (; i < numOfCustomers; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
+    }
+    
+    public void setTickets(ArrayList<Ticket> tickets) {
+    	this.tickets = tickets;
     }
 
     public LocalDateTime getTime() {

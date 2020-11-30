@@ -12,7 +12,7 @@ public class ViewController {
 	
 	private TRS system;
 	private MainMenuGUI mainMenu;
-	private RefundTicketGUI refundTicket;
+	private TicketRefundGUI refundTicket;
 	private CartGUI viewCart;
 	private LoginGUI loginMenu;
 	private MoviesGUI moviesMenu;
@@ -57,7 +57,7 @@ public class ViewController {
 	private class RefundTicketButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			refundTicket = new RefundTicketGUI(400, 100);
+			refundTicket = new TicketRefundGUI(400, 100);
 			refundTicket.addRefundTicketButtonListener(new RefundButtonListener());
 		}
 	}
@@ -88,7 +88,6 @@ public class ViewController {
 	  		  boolean result = system.login(loginMenu.getEmailField().getText(), new String(loginMenu.getPasswordField().getPassword()));
 	  		  
 			  if(result) {
-				  mainMenu.updateLoginView(loginMenu.getEmailField().getText());
 				  loginMenu.dispose();
 				  return;
 			  }
@@ -271,6 +270,10 @@ public class ViewController {
 			payTicket.displayMessage("Checkout Successful");
 			payTicket.dispatchEvent(new WindowEvent(payTicket, WindowEvent.WINDOW_CLOSING));
 		}
+	}
+	
+	public MainMenuGUI getMainMenu() {
+		return mainMenu;
 	}
 	
 	

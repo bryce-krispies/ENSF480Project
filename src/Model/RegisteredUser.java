@@ -9,6 +9,7 @@ public class RegisteredUser extends User{
 	private String address;
 
 	public RegisteredUser(String name, String password, Credit credit, Cart cart, CreditCard creditCard, String address) {
+		super();
 		this.setName(name);
 		this.setPassword(password);
 		this.setCredit(credit);
@@ -18,7 +19,8 @@ public class RegisteredUser extends User{
 	}
 
 	public RegisteredUser() {
-		this.setName(null);
+		super();
+		this.setName("Bryce");
 		this.setPassword(null);
 		this.setCredit(null);
 		this.setCart(null);

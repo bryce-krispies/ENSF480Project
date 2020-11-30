@@ -106,6 +106,7 @@ public class MoviesGUI extends JFrame{
 					}
 				}
 
+				//TODO Movies::forMembers()
 				if(selectedMovie.getShowTime() == null) {
 					showtimeList.setModel(new DefaultListModel<String>());
 				}
@@ -151,6 +152,7 @@ public class MoviesGUI extends JFrame{
 					}
 				}
 				
+				//TODO Filter only registered
 				newSeatListData = new String[selectedShowtime.getSeatList().size()];
 				int i = 0;
 				for(Seat s : selectedShowtime.getSeatList()) {

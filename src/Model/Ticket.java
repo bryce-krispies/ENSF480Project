@@ -54,6 +54,7 @@ public class Ticket {
         seat.freeSeat();
         purchaseTime = null;
     }
+    
     public void purchaseTicket() {
         purchaseTime = LocalDateTime.now();
         seat.reserveSeat();
