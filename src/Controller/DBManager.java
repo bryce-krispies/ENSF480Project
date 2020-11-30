@@ -5,13 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import Model.Theatre;
-import Model.Movie;
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
+import Model.Theatre;
+import Model.Movie;
 
 public class DBManager {
 	// a block of constant fixed strings, these are the files that we will use for
@@ -21,6 +21,10 @@ public class DBManager {
 	final String moviesDB = "Movies.db";
 	final String showtimesDB = "Showtimes.db";
 	final String seatsDB = "Seats.db";
+
+	public DBManager(Theatre theatre) {
+
+	}
 
 	public static void main(String args[]) {
 		// DBManager debug here!
@@ -33,77 +37,62 @@ public class DBManager {
 		// if using sql, connect to db here.
 		// but we are just using serialized files.
 		// so lets go ahead and create some dummy files, so long as they do not exist.
-		if(testing) {
+		if (testing) {
 			ArrayList<RegisteredUser> tempRegisteredUsers = new ArrayList<RegisteredUser>(); // lets add some good fake
 			// users to this file
 			tempRegisteredUsers.add(new RegisteredUser("Richard Kickem", "outtaGum", null, null, null, "101 URB St"));
 			tempRegisteredUsers.add(new RegisteredUser("Ernest Dude", "password", null, null, null, "444 Cyprus St"));
 			tempRegisteredUsers.add(new RegisteredUser("Mann Hecker", "p@5sw0rd", null, null, null, "Earth"));
 			tempRegisteredUsers.add(new RegisteredUser("Robert'); DROP TABLE Students;--", "xkcd327!", null, null, null,
-			"118 1 Ave NE"));
+					"118 1 Ave NE"));
 			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
-			tempTheatres.add(new Theatre("Chinook", "Calgary", null, null));
-			tempTheatres.add(new Theatre("West Edmonton Mall", "Edmonton", null, null));
+			tempTheatres.add(new Theatre("Chinook", 500));
+			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
 			ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
-			tempMovies.add(new Movie("Batman", "Nov 1 1998", "Comic", "A bat struggles to act human", new ArrayList<Showtime>()));
-			tempMovies.add(
-					new Movie("Manbat", "Feb 29 1864", "Documentary", "A human struggles to act like a bat", new ArrayList<Showtime>()));
-			tempMovies.add(new Movie("Scream", "Mar 13 2001", "boo.", "AAAAAAAAAAAAAAAAAH!", new ArrayList<Showtime>()));
+			tempMovies.add(new Movie("Batman", null, "Comic", "A bat struggles to act human"));
+			tempMovies.add(new Movie("Manbat", null, "Documentary", "A human struggles to act like a bat"));
+			tempMovies.add(new Movie("Scream", null, "boo.", "AAAAAAAAAAAAAAAAAH!"));
 			
-			
-			ArrayList<Showtime> tempShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-			tempShowtimes.add(new Showtime(tempMovies.get(0), new ArrayList<Seat>() {{ add(new Seat("Gamer chair", true, 0, null, 5, 5));}}, "00:00", true));
-			tempShowtimes.add(new Showtime(tempMovies.get(0), new ArrayList<Seat>() {{ add(new Seat("False throne", true, 0, null, 5, 5));}}, "11:35", false));
-			tempShowtimes.add(new Showtime(tempMovies.get(0), new ArrayList<Seat>() {{ add(new Seat("Basic seat", true, 0, null, 5, 5));}}, "23:15", false));
-			tempShowtimes.add(new Showtime(tempMovies.get(1), new ArrayList<Seat>() {{ add(new Seat("IMAX seat", true, 0, null, 5, 5));}}, "20:45", false));
-			tempShowtimes.add(new Showtime(tempMovies.get(2), new ArrayList<Seat>() {{ add(new Seat("Bed", true, 0, null, 5, 5));}}, "08:25", true));
-			tempShowtimes.add(new Showtime(tempMovies.get(2), new ArrayList<Seat>() {{ add(new Seat("Metal chair", true, 0, null, 5, 5));}}, "17:25", false));
+			for(Movie m : tempMovies) {
+				ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
+				theseShowtimes.add(new Showtime(null,20));
+				//and then lets init the seats for these showtimes.
+				for(Showtime s : theseShowtimes) {
+					s.setSeats();
+				}
+				m.setShowtime(theseShowtimes);
+			}
 
-			tempMovies.get(0).getShowtimes().add(tempShowtimes.get(0)); //just complete reference circle of movie/showtimes.
-			tempMovies.get(0).getShowtimes().add(tempShowtimes.get(1));
-			tempMovies.get(0).getShowtimes().add(tempShowtimes.get(2));
-			tempMovies.get(1).getShowtimes().add(tempShowtimes.get(3));
-			tempMovies.get(2).getShowtimes().add(tempShowtimes.get(4));
-			tempMovies.get(2).getShowtimes().add(tempShowtimes.get(5));
-			
-			ArrayList<Seat> tempSeats = new ArrayList<Seat>(); // lets add get those fake seats and add them here. hardcoded for now.
-			
 
 			writeFile(RUsDB, tempRegisteredUsers);
 			writeFile(theatresDB, tempTheatres);
 			writeFile(moviesDB, tempMovies);
-			writeFile(showtimesDB, tempShowtimes);
-			writeFile(seatsDB, tempRegisteredUsers);
-			}
+		}
 	}
 
-	public DBManager(Theatre theatre) {
-		
-	}
-	
 	@SuppressWarnings("unchecked")
 	ArrayList<RegisteredUser> importRU() {
 		// open RUs file, import all registered users into here.
 		return (ArrayList<RegisteredUser>) readFile(RUsDB);
 	}
 
+	@SuppressWarnings("unchecked")
 	ArrayList<Theatre> importTheatres() {
 		// open theatres file, import all into here.
-		ArrayList<Theatre> result = new ArrayList<Theatre>();
-		return result;
+		return (ArrayList<Theatre>) readFile(theatresDB);
 	}
 
+	@SuppressWarnings("unchecked")
 	ArrayList<Movie> importMovies() {
-		ArrayList<Movie> result = new ArrayList<Movie>();
-		return result;
+		return (ArrayList<Movie>) readFile(moviesDB);
 	}
 
-	ArrayList<Showtime> importShowtimes() {
-		ArrayList<Showtime> result = new ArrayList<Showtime>();
-		return result;
+	@SuppressWarnings("unchecked")
+	ArrayList<Showtime> importShowtimes() { //currently does nothing, as showtimes are tied to a movie.
+		return (ArrayList<Showtime>) readFile(showtimesDB);
 	}
 
-	ArrayList<Seat> importSeats() {
+	ArrayList<Seat> importSeats() { //currently does nothing as seats are tied to a showtime.
 		ArrayList<Seat> result = new ArrayList<Seat>();
 		return result;
 	}
@@ -120,7 +109,7 @@ public class DBManager {
 		writeFile(RUsDB, movies);
 	}
 
-	void setShowtimes(ArrayList<Showtime> showtimes) {
+	void setShowtimes(ArrayList<Showtime> showtimes) { //currently this does nothing, due to the showtimes being 
 		writeFile(RUsDB, showtimes);
 	}
 
@@ -142,7 +131,7 @@ public class DBManager {
 
 	public void writeFile(String file, Object out) {
 		try {
-			ObjectOutputStream oOut = new ObjectOutputStream(new FileOutputStream(file,false));
+			ObjectOutputStream oOut = new ObjectOutputStream(new FileOutputStream(file, false));
 			oOut.writeObject(out);
 			oOut.close();
 		} catch (Exception e) {
