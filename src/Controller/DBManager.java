@@ -7,9 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
@@ -19,6 +16,9 @@ import Model.User;
 import Model.Movie;
 
 public class DBManager {
+	
+	PaymentController paymentCont;
+	
 	// a block of constant fixed strings, these are the files that we will use for
 	// the db simulation.
 	final String RUsDB = "RegisteredUsers.db";
@@ -93,10 +93,32 @@ public class DBManager {
 		}
 	}
 
+	public User verifyLogin(String email, String password) { //TODO Use HashMap<Map<String, String>, RegisteredUser>
+		ArrayList<RegisteredUser> rUsers = importRU();
+		
+		for(RegisteredUser ru : rUsers) {
+			if(ru.getEmail().equals(email) && ru.getPassword().equals(password)){
+				return ru;
+			}
+		}
+		
+		return null;
+	}
 	
-	private User verifyLogin(String email, String password) {
-		HashMap<Map<String, String>, RegisteredUser> rUsers = new HashMap<Map<String, String>, RegisteredUser>();
-		return rUsers.get(new Map<String, String>(email, password));
+	public User verifyRegistration(String email, String cardNumber) {
+		ArrayList<RegisteredUser> rUsers = importRU();
+		for(RegisteredUser ru : rUsers) {
+			if(ru.getEmail().equals(email)){
+				return null;
+			}
+		}
+		
+		//TODO: Check if cardNumber is not in database; If yes, return null
+		//TODO: Check if cardNumber has enough funds; If no, return null
+		
+		
+		//TODO: Create user in database, then return the user object
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
