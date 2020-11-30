@@ -1,0 +1,52 @@
+public class Seat {
+    public enum type {
+        forRegUser, forEveryone
+    }
+
+    private String id;
+    private boolean isAvilable;
+
+    private type seatType;
+
+    private Ticket ticket;
+
+    public Seat(Ticket ticket, String id, type t) {
+        this.ticket = ticket;
+
+        this.id = id;
+        this.seatType = t;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public boolean checkAvailablity() {
+        return isAvilable;
+    }
+
+    public type getEnumType() {
+        return seatType;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void reserveSeat() {
+        isAvilable = true;
+    }
+
+    public void freeSeat() {
+        isAvilable = false;
+    }
+
+}
