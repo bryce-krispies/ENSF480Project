@@ -133,18 +133,6 @@ public class TRS {
 	}
 	
 	public ArrayList<Ticket> getCartTickets() {
-		//TODO: Get user cart info (this format of showing the ticket is something I quickly thought up, can change)
-		String [] tmpTest = {"Blade Runner 2077, 1:00 PM, A1, $6.99", "Arrival, 7:00 PM, F6, $8.99", "Ex Machina, 10:00 AM, A2, $6.99"};
-		
-		ArrayList<Ticket> tmpTest = new ArrayList<Ticket>();
-		tmpTest.add(new Ticket("ABC-100", 5.35));
-		tmpTest.add(new Ticket("JJD-823", 5.35));
-		
-		tmpTest.get(0)
-		
-		return tmpTest;
-		
-		
 		return user.getCart().getTickets();
 	}
 

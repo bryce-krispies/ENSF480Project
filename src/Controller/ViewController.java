@@ -69,7 +69,9 @@ public class ViewController {
 			viewCart.addProceedListener(new ProceedButtonListener());
 			viewCart.addExitListener(new CartExitButtonListener());
 			
-			viewCart.updateCartGUI(system.getCartTickets());
+			String [] tmpTest = {"Blade Runner 2077, 1:00 PM, A1, $6.99", "Arrival, 7:00 PM, F6, $8.99", "Ex Machina, 10:00 AM, A2, $6.99"};
+			viewCart.updateCartGUI(tmpTest);
+			//viewCart.updateCartGUI(system.getCartTickets());
 		}
 	}
 	
