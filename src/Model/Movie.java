@@ -4,7 +4,9 @@ import java.util.ArrayList;
 public class Movie {
     private String name;
     private LocalDateTime releaseDate;
+
     private String genre;
+
     private String synopsis;
     private ArrayList<Showtime> showTimes;
 
@@ -40,6 +42,7 @@ public class Movie {
     public void setShowtime(ArrayList<Showtime> showTimes) {
         this.showTimes = showTimes;
     }
+
 
     public boolean forMembers(boolean isRegisterdUser) {
         if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)

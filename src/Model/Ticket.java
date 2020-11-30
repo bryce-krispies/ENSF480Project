@@ -52,12 +52,10 @@ public class Ticket {
     public void cancelTicket() {
         seat.freeSeat();
         purchaseTime = null;
-
     }
-
     public void purchaseTicket() {
         purchaseTime = LocalDateTime.now();
-        seat.reserveSeat();
+        seat.reserveSeat()
     }
 
     public boolean isRefundable() {

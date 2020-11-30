@@ -1,10 +1,10 @@
-
 import java.util.ArrayList;
 
 public class Theatre {
     private String name;
     private ArrayList<Movie> movies;
     private Account account;
+
 
     public Theatre(String name, double balance) {
         account = new Account(balance);
@@ -14,6 +14,7 @@ public class Theatre {
     public Account getAccount() {
         return account;
     }
+
 
     // The logic for a reg user vs ordinary user
     public ArrayList<Movie> getMovies() {

@@ -1,4 +1,3 @@
-
 public class Account {
     private double balance;
 
@@ -8,5 +7,6 @@ public class Account {
 
     public void updateBalance(double amountToUpdate) {
         balance += amountToUpdate;
+
     }
 }
