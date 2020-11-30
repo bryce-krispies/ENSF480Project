@@ -1,3 +1,7 @@
+package Model;
+
+import Controller.PaymentController;
+
 public class Payment {
     private boolean hasCompleted;
     private PaymentController paymentController;

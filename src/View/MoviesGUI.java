@@ -32,7 +32,6 @@ public class MoviesGUI extends JFrame{
 		movies = movieDatabase;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
         
         String[] movieNames = new String[movies.size()];
         for(int i = 0; i < movies.size(); i++) {
@@ -85,7 +84,9 @@ public class MoviesGUI extends JFrame{
         splitPane.add(topHalf);
         splitPane.add(bottomHalf);
         add(splitPane, BorderLayout.CENTER);
+        
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
 	}
 	 
@@ -105,14 +106,20 @@ public class MoviesGUI extends JFrame{
 					}
 				}
 
-				newShowtimeListData = new String[selectedMovie.getShowTime().size()];
-				int i = 0;
-				for(Showtime s : selectedMovie.getShowTime()) {
-					newShowtimeListData[i] = s.getTime().format(DateTimeFormatter.ofPattern("h:mm a"));
-					i++;
+				if(selectedMovie.getShowTime() == null) {
+					showtimeList.setModel(new DefaultListModel<String>());
+				}
+				else {
+					newShowtimeListData = new String[selectedMovie.getShowTime().size()];
+					int i = 0;
+					for(Showtime s : selectedMovie.getShowTime()) {
+						newShowtimeListData[i] = s.getTime().format(DateTimeFormatter.ofPattern("h:mm a"));
+						i++;
+					}
+					
+					showtimeList.setListData(newShowtimeListData);
 				}
 				
-				showtimeList.setListData(newShowtimeListData);
 				seatList.setModel(new DefaultListModel<String>());
 				
 				output.setText(null);
@@ -128,17 +135,17 @@ public class MoviesGUI extends JFrame{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if(!e.getValueIsAdjusting()) {
+				createTicketButton.setEnabled(false);
+				
 				if(showtimeList.getSelectedValue() == null) {
 					return;
 				}
-				
-				createTicketButton.setEnabled(false);
 				
 				String[] newSeatListData = null;
 				
 				String pickedShowtime = showtimeList.getSelectedValue();
 				for(Showtime s : selectedMovie.getShowTime()){
-					if(s.getTime().toString().equals(pickedShowtime)){
+					if(s.getTime().format(DateTimeFormatter.ofPattern("h:mm a")).equals(pickedShowtime)){
 						selectedShowtime = s;
 						break;
 					}

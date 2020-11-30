@@ -56,7 +56,7 @@ public class Ticket {
     }
     public void purchaseTicket() {
         purchaseTime = LocalDateTime.now();
-        seat.reserveSeat()
+        seat.reserveSeat();
     }
 
     public boolean isRefundable() {
