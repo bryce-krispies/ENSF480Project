@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,71 +14,146 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class RegisterGUI {
+public class RegisterGUI extends JFrame {
+	
+	private JTextField emailField;
+	private JTextField cardNumField;
+	private JTextField cvvField;
+	private JTextField expiryDateField;
+	private JTextField addressField;
+	private JPasswordField passwordField;
+	private JButton registerButton;
 	
 	private static final int FRAME_WIDTH = 380;
 	private static final int FRAME_HEIGHT = 250;
-	   
-	public static void render() 
-	{
+	
+	public RegisterGUI(){
+		super("Register");
+
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setLayout(new BorderLayout());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		
-		JFrame frame = new JFrame("Register User");
-	    frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    frame.setLocationRelativeTo(null);
-	      
 	    JPanel buttonBar = new JPanel();
-	    JButton registerButton = new JButton("Register");
+	    registerButton = new JButton("Register");
 	    buttonBar.add(registerButton);
-	    frame.getContentPane().add(BorderLayout.SOUTH, buttonBar);
-	      
+	    add(BorderLayout.SOUTH, buttonBar);
+	    
 	    JPanel inputArea = new JPanel(new GridLayout(0, 2));
 	    JLabel emailLabel = new JLabel("  Enter Email");
-	    JTextField emailField = new JTextField(10);
+	    emailField = new JTextField(10);
 	    JLabel passwordLabel = new JLabel("  Enter Password");
-	    JPasswordField passwordField = new JPasswordField(10);
+	    passwordField = new JPasswordField(10);
 	    JLabel cardNoLabel = new JLabel("  Enter Card Number");
-	    JTextField cardNoField = new JTextField(10);
+	    cardNumField = new JTextField(10);
 	    JLabel cvvLabel = new JLabel("  Enter Card Verification Value");
-	    JTextField cvvField = new JTextField(10);
+	    cvvField = new JTextField(10);
 	    JLabel expiryDateLabel = new JLabel("  Enter Expiry Date");
-	    JTextField expiryDateField = new JTextField(10);
+	    expiryDateField = new JTextField(10);
 	    JLabel addressLabel = new JLabel("  Enter Home Address");
-	    JTextField addressField = new JTextField(10);
+	    addressField = new JTextField(10);
      	inputArea.add(emailLabel);
 	    inputArea.add(emailField);
 	    inputArea.add(passwordLabel);
 	    inputArea.add(passwordField);
 	    inputArea.add(cardNoLabel);
-	    inputArea.add(cardNoField);
+	    inputArea.add(cardNumField);
 	    inputArea.add(cvvLabel);
 	    inputArea.add(cvvField);
 	    inputArea.add(expiryDateLabel);
 	    inputArea.add(expiryDateField);
 	    inputArea.add(addressLabel);
 	    inputArea.add(addressField);
-	    frame.getContentPane().add(BorderLayout.CENTER, inputArea);
-	     
-	    registerButton.addActionListener(new ActionListener(){
-	  	  	@Override
-	  	  	public void actionPerformed(ActionEvent e) {
-	  	  		if(emailField.getText().length() < 1 || passwordField.getPassword().length < 1 || cardNoField.getText().length() < 1 || 
-	  	  				cvvField.getText().length() < 1 || expiryDateField.getText().length() < 1 || addressField.getText().length() < 1) {
-	  	  			JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
-	  	  			return;
-	  	  		}
-	  	  		
-  	  			int i = 0;
-  	  			//SEND all inputs
-  	  			if(i == 0) {
-  	  				JOptionPane.showMessageDialog(null, "Successfully registered");
-  	  				frame.dispose();
-  	  			} else {
-  	  				JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
-  	  			}
-	  	  	}
-	    });
-	      
-	    frame.setVisible(true);
+	    add(BorderLayout.CENTER, inputArea);
+		
+		setVisible(true);
 	}
+		
+	public void addRegisterListener(ActionListener a) { registerButton.addActionListener(a); }
+	
+	public JTextField getEmailField() { return emailField; }
+	public JTextField getCardNumField() { return cardNumField; }
+	public JTextField getCVVField() { return cvvField; }
+	public JTextField getExpiryDateField() { return expiryDateField; }
+	public JTextField getAddressField() { return addressField; }
+	public JPasswordField getPasswordField() { return passwordField; }
+	public JButton getRegisterButton() { return registerButton; }
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	public void renderComponents(JPanel panel) {
+		renderEmail(panel);
+		renderPassword(panel);
+		renderCardNum(panel);
+		renderCVV(panel);
+		renderExpiryDate(panel);
+		renderAddress(panel);
+	}
+	
+	public void renderEmail(JPanel panel) {
+		JLabel emailLabel = new JLabel("Email");
+		emailLabel.setFont(new Font(emailLabel.getFont().getName(), Font.BOLD, 16));
+		emailLabel.setBounds(35, 25, 90, 25);
+		panel.add(emailLabel);
+		
+		emailField = new JTextField(10);
+		emailField.setBounds(35, 25, 200, 25);
+	}
+	
+	public void renderPassword(JPanel panel) {
+		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel.setFont(new Font(passwordLabel.getFont().getName(), Font.BOLD, 16));
+		passwordLabel.setBounds(35, 60, 130, 25);
+		panel.add(passwordLabel);
+	}
+
+	public void renderCardNum(JPanel panel) {
+		JLabel cardNumLabel = new JLabel("Card Number");
+		cardNumLabel.setFont(new Font(cardNumLabel.getFont().getName(), Font.BOLD, 16));
+		cardNumLabel.setBounds(35, 95, 200, 25);
+		panel.add(cardNumLabel);
+	}
+
+	public void renderCVV(JPanel panel) {
+		JLabel cvvLabel = new JLabel("Enter Email");
+		cvvLabel.setFont(new Font(cvvLabel.getFont().getName(), Font.BOLD, 16));
+		cvvLabel.setBounds(325, 25, 200, 25);
+		panel.add(cvvLabel);
+	}
+	
+	public void renderExpiryDate(JPanel panel) {
+		JLabel expiryDateLabel = new JLabel("Enter Email");
+		expiryDateLabel.setFont(new Font(expiryDateLabel.getFont().getName(), Font.BOLD, 16));
+		expiryDateLabel.setBounds(325, 25, 200, 25);
+		panel.add(expiryDateLabel);
+	}
+	
+	public void renderAddress(JPanel panel) {
+		JLabel addressLabel = new JLabel("Enter Email");
+		addressLabel.setFont(new Font(addressLabel.getFont().getName(), Font.BOLD, 16));
+		addressLabel.setBounds(325, 25, 200, 25);
+		panel.add(addressLabel);
+	}
+*/

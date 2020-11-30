@@ -1,56 +1,82 @@
 package Model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Showtime {
-	private Movie movie;
-	private ArrayList<Seat> seats;
-	private String time;
-	private boolean isFull;
+    private Movie movie;
+    private ArrayList<Ticket> tickets;
+    private ArrayList<Seat> seats;
+    private LocalDateTime time;
+    private boolean isFull;
 
-	public Showtime() {
-		setMovie(null);
-		setSeats(null);
-		setTime(null);
-		setFull(false);
-	}
+    public Showtime(LocalDateTime time) {
+        this.time = time;
+        isFull = false;
+        seats = new ArrayList<Seat>(20);
+    }
 
-	public Showtime(Movie movie, ArrayList<Seat> seats, String time, boolean isFull) {
-		setMovie(movie);
-		setSeats(seats);
-		setTime(time);
-		setFull(isFull);
-	}
+    public Movie getMovie() {
+        return movie;
+    }
 
-	public Movie getMovie() {
-		return movie;
-	}
+    public void setMovie(Movie m) {
+        movie = m;
+    }
 
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
+    public ArrayList<Seat> getSeatList() {
+        return seats;
+    }
+    
+    public void setSeatList(ArrayList<Seat> seats) {
+        this.seats = seats;
+    }
 
-	public ArrayList<Seat> getSeats() {
-		return seats;
-	}
+    // Might not need this
+    public Seat getSeat(String id) {
+        for (Seat seat : seats) {
+            if (seat.getID() == id)
+                return seat;
+        }
+        return null;
+    }
 
-	public void setSeats(ArrayList<Seat> seats) {
-		this.seats = seats;
-	}
+    public void setSeats() {
+        int i = 0;
+        for (; i < (seats.size() * 0.9); i++) {
+            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forEveryone, true);
+            seats.add(seat);
+            tickets.get(i).setSeat(seat);
+        }
 
-	public String getTime() {
-		return time;
-	}
+        for (; i < seats.size(); i++) {
+            Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
+            seats.add(seat);
+            tickets.get(i).setSeat(seat);
+        }
+    }
 
-	public void setTime(String time) {
-		this.time = time;
-	}
+    public LocalDateTime getTime() {
+        return time;
+    }
 
-	public boolean isFull() {
-		return isFull;
-	}
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
-	public void setFull(boolean isFull) {
-		this.isFull = isFull;
-	}
+    public void setIsFull(boolean isFull) {
+        this.isFull = isFull;
+    }
+
+    public boolean checkIsFull() {
+        for (Seat seat : seats)
+            if (seat.checkAvailablity() == true) {
+                isFull = false;
+                return isFull;
+            }
+        isFull = true;
+        return isFull;
+
+    }
+
 }

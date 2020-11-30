@@ -1,10 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
+public class User {
 
-public class User{
-	protected boolean flagRU;
-	protected String email;
-	protected ArrayList<Ticket> tickets;
-	
 }

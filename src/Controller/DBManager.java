@@ -7,11 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import Model.Theatre;
 import Model.Movie;
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
-import Model.Theatre;
 
 public class DBManager {
 	// a block of constant fixed strings, these are the files that we will use for
@@ -77,6 +77,10 @@ public class DBManager {
 			}
 	}
 
+	public DBManager(Theatre theatre) {
+		
+	}
+	
 	@SuppressWarnings("unchecked")
 	ArrayList<RegisteredUser> importRU() {
 		// open RUs file, import all registered users into here.

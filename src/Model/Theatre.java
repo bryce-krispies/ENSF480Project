@@ -3,54 +3,40 @@ package Model;
 import java.util.ArrayList;
 
 public class Theatre {
-	private String name;
-	private String address;
-	private ArrayList<Movie> movies;
-	private Account account;
+    private String name;
+    private ArrayList<Movie> movies;
+    private Account account;
 
-	public Theatre() {
-		this.setName(null);
-		this.setAddress(null);
-		this.setMovies(null);
-		this.setAccount(null);
-	}
 
-	public Theatre(String name, String address, ArrayList<Movie> movies, Account account) {
-		this.setName(name);
-		this.setAddress(address);
-		this.setMovies(movies);
-		this.setAccount(account);
-	}
+    public Theatre(String name, double balance) {
+        account = new Account(balance);
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Account getAccount() {
+        return account;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public String getAddress() {
-		return address;
-	}
+    // The logic for a reg user vs ordinary user
+    public ArrayList<Movie> getMovies() {
+        // if (!isRegisterdUser) {
+        // ArrayList<Movie> ordMovie = new ArrayList<Movie>();
+        // for (Movie movie : movies) {
+        // if ((LocalDateTime.now().isBefore(movie.getReleaseDate()))) {
+        // ordMovie.add(movie);
+        // }
+        // }
+        // return ordMovie;
+        // }
+        return movies;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setMovies(ArrayList<Movie> movies) {
+        this.movies = movies;
+    }
 
-	public ArrayList<Movie> getMovies() {
-		return movies;
-	}
-
-	public void setMovies(ArrayList<Movie> movies) {
-		this.movies = movies;
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public String getName() {
+        return name;
+    }
 }

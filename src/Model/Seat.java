@@ -1,77 +1,46 @@
 package Model;
 
-public class Seat{
-	private String id;
-	private boolean isAvailable;
-	private int type; //TODO: Define the enum this uses.
-	private Ticket ticket;
-	private int row;
-	private int column;
-	
-	public Seat() {
-		setId(null);
-		setAvailable(false);
-		setType(-1);
-		setTicket(null);
-		setRow(-1);
-		setColumn(-1);
-	}
-	
-	public Seat(String id, boolean isAvailable, int type, Ticket ticket, int row, int column) {
-		setId(id);
-		setAvailable(isAvailable);
-		setType(type);
-		setTicket(ticket);
-		setRow(row);
-		setColumn(column);
-	}
+public class Seat {
+    public enum type {
+        forRegUser, forEveryone
+    }
 
-	public String getId() {
-		return id;
-	}
+    private String id;
+    private boolean isAvilable;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private type seatType;
 
-	public boolean isAvailable() {
-		return isAvailable;
-	}
+    private Ticket ticket;
 
-	public void setAvailable(boolean isAvailable) {
-		this.isAvailable = isAvailable;
-	}
+    public Seat(Ticket ticket, String id, type t, boolean isAvilable) {
+        this.ticket = ticket;
+        this.isAvilable = isAvilable;
+        this.id = id;
+        this.seatType = t;
+    }
 
-	public int getType() {
-		return type;
-	}
+    public String getID() {
+        return id;
+    }
 
-	public void setType(int type) {
-		this.type = type;
-	}
+    public boolean checkAvailablity() {
+        return isAvilable;
+    }
 
-	public Ticket getTicket() {
-		return ticket;
-	}
+    public type getEnumType() {
+        return seatType;
+    }
 
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
-	}
+    public Ticket getTicket() {
+        return ticket;
+    }
 
-	public int getRow() {
-		return row;
-	}
+    public void reserveSeat() {
+        isAvilable = false;
+    }
 
-	public void setRow(int row) {
-		this.row = row;
-	}
+    public void freeSeat() {
+        isAvilable = true;
+    }
 
-	public int getColumn() {
-		return column;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
-	}
-	
 }

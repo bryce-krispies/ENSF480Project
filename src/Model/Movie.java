@@ -1,70 +1,54 @@
 package Model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Movie {
-	private String name;
-	private String releaseDate;
-	private String genre;
-	private String synopsis;
-	private ArrayList<Showtime> showtimes;
+    private String name;
+    private LocalDateTime releaseDate;
 
-	//create a new movie without any set values.
-	public Movie() {
-		setName(null);
-		setReleaseDate(null);
-		setGenre(null);
-		setSynopsis(null);
-		setShowtimes(null);
-	}
+    private String genre;
 
-	//create a new movie from input values;
-	public Movie(String name, String releaseDate, String genre, String synposis, ArrayList<Showtime> showtimes) {
-		setName(name);
-		setReleaseDate(releaseDate);
-		setGenre(genre);
-		setSynopsis(synposis);
-		setShowtimes(showtimes);
-	}
+    private String synopsis;
+    private ArrayList<Showtime> showTimes;
 
-	public String getName() {
-		return name;
-	}
+    public Movie(String name, LocalDateTime releaseDate, String genre, String synopsis) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.genre = genre;
+        this.synopsis = synopsis;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getReleaseDate() {
-		return releaseDate;
-	}
+    public LocalDateTime getReleaseDate() {
+        return releaseDate;
+    }
 
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public String getGenre() {
+        return genre;
+    }
 
-	public String getGenre() {
-		return genre;
-	}
+    public String getSynopsis() {
+        return synopsis;
+    }
 
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+    public ArrayList<Showtime> getShowTime() {
+        if (LocalDateTime.now().isBefore(releaseDate))
+            return null;
+        return showTimes;
+    }
 
-	public String getSynopsis() {
-		return synopsis;
-	}
+    public void setShowtime(ArrayList<Showtime> showTimes) {
+        this.showTimes = showTimes;
+    }
 
-	public void setSynopsis(String synopsis) {
-		this.synopsis = synopsis;
-	}
 
-	public ArrayList<Showtime> getShowtimes() {
-		return showtimes;
-	}
-
-	public void setShowtimes(ArrayList<Showtime> showtimes) {
-		this.showtimes = showtimes;
-	}
-
+    public boolean forMembers(boolean isRegisterdUser) {
+        if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)
+            return true;
+        return false;
+    }
 }
