@@ -1,8 +1,14 @@
 package Model;
 
 public class Account {
-    private float balance;
+    private double balance;
 
-    public void updateBalance() {
+    public Account(double balance) {
+        this.balance = balance;
+    }
+
+    public void updateBalance(double amountToUpdate) {
+        balance += amountToUpdate;
+
     }
 }

@@ -7,8 +7,9 @@ public class Theatre {
     private ArrayList<Movie> movies;
     private Account account;
 
-    public Theatre(String name) {
-        account = new Account();
+
+    public Theatre(String name, double balance) {
+        account = new Account(balance);
         this.name = name;
     }
 
@@ -16,7 +17,18 @@ public class Theatre {
         return account;
     }
 
+
+    // The logic for a reg user vs ordinary user
     public ArrayList<Movie> getMovies() {
+        // if (!isRegisterdUser) {
+        // ArrayList<Movie> ordMovie = new ArrayList<Movie>();
+        // for (Movie movie : movies) {
+        // if ((LocalDateTime.now().isBefore(movie.getReleaseDate()))) {
+        // ordMovie.add(movie);
+        // }
+        // }
+        // return ordMovie;
+        // }
         return movies;
     }
 
