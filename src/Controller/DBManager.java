@@ -55,8 +55,8 @@ public class DBManager {
 			// and then lets init the seats for these showtimes.
 
 			for (Showtime s : theseShowtimes) {
-				ArrayList<Ticket> tickets = new ArrayList<Ticket>(9);
-				for (int i = 0; i < 9; i++) {
+				ArrayList<Ticket> tickets = new ArrayList<Ticket>(10);
+				for (int i = 0; i < 10; i++) {
 					Ticket ticket = new Ticket(Integer.toString(j++), 12.00);
 					tickets.add(ticket);
 				}
@@ -111,12 +111,10 @@ public class DBManager {
 		File f = new File(RUsDB);
 		if (!f.exists() && !f.isDirectory()) {// if the file dos not exist yet
 			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
-			tempRUs.add(new RegisteredUser("Bob Roberts", "password",
-					new Credit("a8s8fubpz", 19.99, LocalDateTime.now()), new Cart(),
+			tempRUs.add(new RegisteredUser("Bob Roberts",  "emailHere", "password",
+					 new Cart(),
 					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
-			tempRUs.add(new RegisteredUser("Billy Bob", "p@s5w0rD",
-					new Credit("zuyfnw0xc", 16.99, LocalDateTime.now()), new Cart(),
-					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
+			tempRUs.add(new RegisteredUser("Billy Bob", "emailHere", "p@s5w0rD", new Cart(), new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
 			setRU(tempRUs);
 		}
 

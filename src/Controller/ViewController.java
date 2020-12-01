@@ -135,9 +135,7 @@ public class ViewController {
 				loginMenu.dispose();
 				return;
 			}
-			
-			//TODO Fix
-			
+
 			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, "
 					+ "or your credit card does not exist or doesn't have enough funds", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -176,13 +174,17 @@ public class ViewController {
 			
 			refundTicket.dispose();
 			
-			int choice = JOptionPane.showConfirmDialog(null, "Do you want to login/register before going ahead?"
-					+ "\n(The theatre will only refund 85% of the ticket price if you are unregistered)", "NOTICE", JOptionPane.YES_NO_OPTION);
-			if(choice == JOptionPane.YES_OPTION) {
-				loginMenu = new LoginGUI();
-				
-				loginMenu.addLoginListener(new LoginListener());
-				loginMenu.addRegisterListener(new RegisterButtonListener());
+			if(!system.getIsRegistered()) {
+				int choice = JOptionPane.showConfirmDialog(null, "Do you want to login/register before going ahead?"
+						+ "\n(The theatre will only refund 85% of the ticket price if you are unregistered)", "NOTICE", JOptionPane.YES_NO_OPTION);
+				if(choice == JOptionPane.YES_OPTION) {
+					loginMenu = new LoginGUI();
+					
+					loginMenu.addLoginListener(new LoginListener());
+					loginMenu.addRegisterListener(new RegisterButtonListener());
+					
+					return;
+				}
 			}
 
 			String result = system.refundTicket(ticketID);
