@@ -7,13 +7,13 @@ public class Payment {
         hasCompleted = false;
     }
 
-    public void makePaymentToTheatre(Account account, float total) {
+    public void makePaymentToTheatre(Account account, double total) {
         account.updateBalance(total);
     }
 
-    public void refundPaymentToUser(Ticket ticket) {
-        ticket.cancelTicket();
-        account.updateBalance(-ticket.getPrice());
+    public void refundPaymentToUser(double amountToRefund) {
+
+        account.updateBalance(amountToRefund);
     }
 
 }
