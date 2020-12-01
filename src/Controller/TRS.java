@@ -4,6 +4,7 @@ import Model.User;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
 import Model.Theatre;
+import Model.Ticket;
 
 public class TRS {
 	
@@ -26,8 +28,8 @@ public class TRS {
 	public TRS(ViewController viewCont) {
 		isRegistered = false;
 		user = new User();
-		theatre = new Theatre("Scotiabank Theatre", 50);
-		dbMan = new DBManager(theatre); //Load database
+		theatre = new Theatre("Scotiabank Theatre", 50); //TODO Fix the account quantity
+		dbMan = new DBManager(theatre);
 		this.viewCont = viewCont;
 		payCont = new PaymentController();
 	}
@@ -36,14 +38,19 @@ public class TRS {
 		return theatre.getMovies();
 	}
 	
-	public boolean addTicketToCart(String movie, String showtime, String seat) {
-		int i = 0;
-		if(i == 1){//add to cart success
-			return true;
+	public String refundTicket(int id) {
+		return null;
+	}
+	
+	public boolean addTicketToCart(String movie, String showtime, String seatID) {
+		
+		Seat s = theatre.getMovie(movie).getSpecificShowtime(showtime).getSeat(seatID);
+		
+		if(s != null) {
+			s.reserveSeat();
+			user.getCart().addTicket(s.getTicket());
 		}
-		
-		//add to cart failed
-		
+
 		return false;
 	}
 	

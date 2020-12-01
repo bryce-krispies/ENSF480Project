@@ -69,46 +69,7 @@ public class DBManager {
 		theatre.setMovies(tempMovies);
 	}
 
-	DBManager() {
-		boolean testing = true;
-		// if using sql, connect to db here.
-		// but we are just using serialized files.
-		// so lets go ahead and create some dummy files, so long as they do not exist.
-		if (testing) {
-			ArrayList<RegisteredUser> tempRegisteredUsers = new ArrayList<RegisteredUser>(); // lets add some good fake
-			// users to this file
-			tempRegisteredUsers.add(new RegisteredUser("Richard Kickem", "outtaGum", null, null, null, "101 URB St"));
-			tempRegisteredUsers.add(new RegisteredUser("Ernest Dude", "password", null, null, null, "444 Cyprus St"));
-			tempRegisteredUsers.add(new RegisteredUser("Mann Hecker", "p@5sw0rd", null, null, null, "Earth"));
-			tempRegisteredUsers.add(new RegisteredUser("Robert'); DROP TABLE Students;--", "xkcd327!", null, null, null,
-					"118 1 Ave NE"));
-			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
-			tempTheatres.add(new Theatre("Chinook", 500));
-//			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
-			ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
-			tempMovies.add(new Movie("Batman", null, "Comic", "A bat struggles to act human"));
-			tempMovies.add(new Movie("Manbat", null, "Documentary", "A human struggles to act like a bat"));
-			tempMovies.add(new Movie("Scream", null, "boo.", "AAAAAAAAAAAAAAAAAH!"));
-
-			for (Movie m : tempMovies) {
-				ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-				theseShowtimes.add(new Showtime(null, 20));
-				// and then lets init the seats for these showtimes.
-				for (Showtime s : theseShowtimes) {
-					s.setSeats();
-				}
-				m.setShowtime(theseShowtimes);
-			}
-
-			tempTheatres.get(0).setMovies(tempMovies);
-
-			writeFile(RUsDB, tempRegisteredUsers);
-			writeFile(theatresDB, tempTheatres);
-			writeFile(moviesDB, tempMovies);
-		}
-	}
-
-	public User verifyLogin(String email, String password) { // TODO Use HashMap<Map<String, String>, RegisteredUser>
+	public User verifyLogin(String email, String password) { //TODO Use HashMap<Map<String, String>, RegisteredUser>
 		ArrayList<RegisteredUser> rUsers = importRU();
 
 		for (RegisteredUser ru : rUsers) {
