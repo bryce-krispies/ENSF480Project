@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Ticket implements Serializable{
     /**
@@ -72,9 +73,12 @@ public class Ticket implements Serializable{
     @Override
     public String toString() {
         String res = "";
+        res += "Ticket ID ";
+        res += id;
+        res += ": ";
         res += this.getShowtime().getMovie().getName();
         res += ", ";
-        res += this.getShowtime().getTime().toString();
+        res += this.getShowtime().getTime().format(DateTimeFormatter.ofPattern("h:mm a"));
         res += ", ";
         res += this.getSeat().getID();
         res += ", $";
