@@ -20,9 +20,7 @@ public class ViewController {
 	private TicketPaymentGUI payTicket;
 	private RegisterGUI registerMenu;
 	
-	//Temp variable for testing
-	private boolean loggedIn;
-	
+	boolean loggedIn = false;
 	//Used to keep track of previously used vouchers so you cant apply the same voucher to
 	//the same purchase
 	private ArrayList<String> prevVouchers;
@@ -114,6 +112,7 @@ public class ViewController {
 	private class RegisterButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			loginMenu.dispose();
 			registerMenu = new RegisterGUI();
 			registerMenu.addRegisterListener(new RegisterListener());
 		}
@@ -177,43 +176,28 @@ public class ViewController {
 				return;
 			}
 			
-
-			//TODO: Check if tickedID can cancel
+			refundTicket.dispose();
 			
-
-			if(loggedIn) {
-				refundTicket.RUCancel();
-				refundTicket.addYesConfButtonListener(new YesRefundButtonListener());
-				refundTicket.addNoConfButtonListener(new NoRefundButtonListener());
-			}else {
-				refundTicket.regCancel();
-				refundTicket.addYesConfButtonListener(new YesRefundButtonListener());
-				refundTicket.addNoConfButtonListener(new NoRefundButtonListener());
-			}
-		}
-	}
-	private class YesRefundButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			//TODO: Update database/send email with credit
-			
-
-			if(loggedIn) {
-				refundTicket.displayMessage("Successfully cancelled ticket");
-				refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
-			}else {
-				String email = refundTicket.getEmail();
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to login/register before going ahead?"
+					+ "\n(The theatre will only refund 85% of the ticket price if you are unregistered)", "NOTICE", JOptionPane.YES_NO_OPTION);
+			if(choice == JOptionPane.YES_OPTION) {
+				loginMenu = new LoginGUI();
 				
-				refundTicket.displayMessage("Successfully cancelled ticket");
-				refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
+				loginMenu.addLoginListener(new LoginListener());
+				loginMenu.addRegisterListener(new RegisterButtonListener());
+			}
+
+			String result = system.refundTicket(ticketID);
+			
+			if(result != null) {
+				JOptionPane.showMessageDialog(null, "Here is your voucher code: " +result 
+						+"\n(Only useable within a year)", "Error", JOptionPane.ERROR_MESSAGE);
+
+				return;
 			}
 			
-		}
-	}
-	private class NoRefundButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
+			JOptionPane.showMessageDialog(null, "Sorry, ticket could not be refunded. Either your ticket does not exist "
+					+ "or your showtime is within 72 hours.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

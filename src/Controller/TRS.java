@@ -38,6 +38,10 @@ public class TRS {
 		return theatre.getMovies();
 	}
 	
+	public String refundTicket(int id) {
+		return null;
+	}
+	
 	public boolean addTicketToCart(String movie, String showtime, String seatID) {
 		
 		Seat s = theatre.getMovie(movie).getSpecificShowtime(showtime).getSeat(seatID);
