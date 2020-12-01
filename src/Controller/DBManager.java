@@ -147,6 +147,7 @@ public class DBManager {
 			tempRUs.add(new RegisteredUser("Billy Bob", "p@s5w0rD",
 					new Credit("zuyfnw0xc", 16.99, LocalDateTime.now()), new Cart(),
 					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
+			setRU(tempRUs);
 		}
 
 		// open RUs file, import all registered users into here.
