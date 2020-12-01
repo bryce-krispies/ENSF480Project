@@ -41,14 +41,6 @@ public class TRS {
 		return theatre.getMovies();
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public Theatre getTheatre() {
-		return theatre;
-	}
-
 	public String refundTicket(int id) {
 		// TODO Write
 		return null;
@@ -120,6 +112,10 @@ public class TRS {
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public Theatre getTheatre() {
+		return theatre;
 	}
 
 }

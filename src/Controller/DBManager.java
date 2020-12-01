@@ -114,7 +114,7 @@ public class DBManager {
 			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
 			tempRUs.add(new RegisteredUser("Bob Roberts",  "bob.roberts@example.com", "password", new Cart(),
 					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
-			tempRUs.add(new RegisteredUser("Billy Bob", "billy.bob@example.com", "p@s5w0rD", , new Cart(),
+			tempRUs.add(new RegisteredUser("Billy Bob", "billy.bob@example.com", "p@s5w0rD", new Cart(),
 					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
 			setRU(tempRUs);
 		}

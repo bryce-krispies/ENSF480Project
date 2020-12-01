@@ -74,7 +74,7 @@ public class Ticket implements Serializable{
         String res = "";
         res += this.getShowtime().getMovie().getName();
         res += ", ";
-        res += this.getShowtime().getTime.toString();
+        res += this.getShowtime().getTime().toString();
         res += ", ";
         res += this.getSeat().getID();
         res += ", $";
