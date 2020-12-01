@@ -21,7 +21,7 @@ public class FinancialInstituteManager {
 			fakeCreditCards.add(new CreditCard("9876543210987654", 198, "03/23", "Bank"));
 			fakeCreditCards.add(new CreditCard("4817238947817298", 111, "10/21", "Bank"));
 			fakeCreditCards.add(new CreditCard("1872395817289356", 876, "01/21", "Company Card"));
-
+			
 			writeFile("CreditCard.db",fakeCreditCards); //save the fake credit cards to the file.
 		}
 	}
