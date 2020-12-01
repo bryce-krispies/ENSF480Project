@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Credit;
+import Model.CreditCard;
 import Model.Payment;
 import Model.Ticket;
 
@@ -59,7 +60,7 @@ public class PaymentController {
         if (!trs.getIsRegistered()) {
             creditAmount /= 0.85;
         }
-        payment.refundPaymentToUser(creditAmount);
+        payment.refundPaymentToUser(trs.getTheatre().getAccount(), creditAmount);
         ticket.cancelTicket();
 
         Credit credit = new Credit(createRandomCode((int) Math.random(), "ABCDEFGHIJKLMNOPQRSTUVWXYZ"), creditAmount,
