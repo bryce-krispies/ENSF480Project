@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Movie {
@@ -46,9 +47,20 @@ public class Movie {
     }
 
 
-    public boolean forMembers(boolean isRegisterdUser) {
-        if (LocalDateTime.now().isBefore(releaseDate) && isRegisterdUser)
+    public boolean forMembers() {
+        if (LocalDateTime.now().isBefore(releaseDate))
             return true;
         return false;
     }
+    
+    public Showtime getSpecificShowtime(String specificShowtime) {
+    	for(Showtime s : showTimes) {
+    		if(s.getTime().format(DateTimeFormatter.ofPattern("h:mm a")).equals(specificShowtime)) {
+    			return s;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
 }

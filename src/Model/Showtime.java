@@ -35,7 +35,6 @@ public class Showtime {
         this.seats = seats;
     }
 
-    // Might not need this
     public Seat getSeat(String id) {
         for (Seat seat : seats) {
             if (seat.getID() == id)
@@ -51,7 +50,8 @@ public class Showtime {
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
-
+        
+        //TODO Fix
         for (; i < numOfCustomers; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);

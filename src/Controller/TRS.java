@@ -4,15 +4,18 @@ import Model.User;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Model.Cart;
 import Model.Movie;
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
 import Model.Theatre;
+import Model.Ticket;
 
 public class TRS {
 
@@ -24,10 +27,10 @@ public class TRS {
 	private PaymentController payCont;
 
 	public TRS(ViewController viewCont) {
-		isRegistered = true;
+		isRegistered = false;
 		user = new User();
-		theatre = new Theatre("Scotiabank Theatre", 50);
-		dbMan = new DBManager(theatre); // Load database
+		theatre = new Theatre("Scotiabank Theatre", 50); // TODO Fix the account quantity
+		dbMan = new DBManager(theatre);
 		this.viewCont = viewCont;
 		payCont = new PaymentController();
 	}
@@ -40,13 +43,19 @@ public class TRS {
 		return user;
 	}
 
-	public boolean addTicketToCart(String movie, String showtime, String seat) {
-		int i = 0;
-		if (i == 1) {// add to cart success
-			return true;
-		}
+	public String refundTicket(int id) {
+		// TODO Write
+		return null;
+	}
 
-		// add to cart failed
+	public boolean addTicketToCart(String movie, String showtime, String seatID) {
+
+		Seat s = theatre.getMovie(movie).getSpecificShowtime(showtime).getSeat(seatID);
+
+		if (s != null) {
+			s.reserveSeat();
+			user.getCart().addTicket(s.getTicket());
+		}
 
 		return false;
 	}
@@ -55,9 +64,8 @@ public class TRS {
 
 		User registeredUser = dbMan.verifyLogin(email, password);
 
-		if (registeredUser != null) {// login successful
+		if (registeredUser != null) {
 			Cart previousCart = user.getCart();
-			// Transfer cart
 			user = registeredUser;
 			user.setCart(previousCart);
 
@@ -73,8 +81,7 @@ public class TRS {
 			// return false;
 			// }
 			// }
-
-			viewCont.getMainMenu().updateLoginView(user.getName());
+			// viewCont.getMainMenu().updateLoginView(user.getName());
 			isRegistered = true;
 
 			return true;
@@ -86,23 +93,18 @@ public class TRS {
 	public boolean register(String email, String password, String cardNumber, String cvv, String expiryDate,
 			String address) {
 
-		// Check in database for email, or cardNumber
+		User registeredUser = dbMan.verifyRegistration(null, email, password, cardNumber, cvv, expiryDate, address,
+				user.getCart());
 
-		if (false /* If email or card number already registered in database */) {
+		if (registeredUser == null) {
 			return false;
 		}
 
-		if (false /* If cardNumber does not have sufficient funds to pay registration fee */) {
-			return false;
-		}
+		return login(email, password);
+	}
 
-		// registration successful
-
-		// Set user variable
-
-		// isRegistered = true;
-
-		return true;
+	public boolean getIsRegistered() {
+		return isRegistered;
 	}
 
 }

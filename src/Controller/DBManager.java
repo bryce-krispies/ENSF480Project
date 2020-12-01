@@ -7,20 +7,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import Model.RegisteredUser;
 import Model.Seat;
 import Model.Showtime;
 import Model.Theatre;
 import Model.Ticket;
 import Model.User;
+import Model.Cart;
+import Model.Credit;
+import Model.CreditCard;
 import Model.Movie;
 
 public class DBManager {
+
+	PaymentController paymentCont;
+
 	// a block of constant fixed strings, these are the files that we will use for
 	// the db simulation.
+
 	final String RUsDB = "RegisteredUsers.db";
 	final String theatresDB = "Theatres.db";
 	final String moviesDB = "Movies.db";
@@ -29,19 +33,30 @@ public class DBManager {
 
 	public DBManager(Theatre theatre) {
 		ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
-		tempMovies.add(new Movie("Batman", LocalDateTime.of(2020, 11, 29, 22, 25), "Comedy", "A bat struggles to act human"));
-		tempMovies.add(new Movie("Manbat", LocalDateTime.of(2020, 12, 5, 11, 35), "Documentary", "A human struggles to act like a bat"));
+		tempMovies.add(
+				new Movie("Batman", LocalDateTime.of(2020, 11, 29, 22, 25), "Comedy", "A bat struggles to act human"));
+		tempMovies.add(new Movie("Manbat", LocalDateTime.of(2020, 12, 5, 11, 35), "Documentary",
+				"A human struggles to act like a bat"));
 		tempMovies.add(new Movie("Scream", LocalDateTime.of(2020, 11, 30, 1, 50), "Sci-Fi", "AAAAAAAAAAAAAAAAAH!"));
 
 		int j = 0;
 		for (Movie m : tempMovies) {
 			ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-			theseShowtimes.add(new Showtime(LocalDateTime.now().plusHours((long)(Math.random() * (12 - 2 + 1) + 2)), 9)); //TODO Fix timing logic (what if number occurs twice?)
+			theseShowtimes
+					.add(new Showtime(LocalDateTime.now().plusHours((long) (Math.random() * (12 - 2 + 1) + 2)), 9)); // TODO
+																														// Fix
+																														// timing
+																														// logic
+																														// (what
+																														// if
+																														// number
+																														// occurs
+																														// twice?)
 			// and then lets init the seats for these showtimes.
-			
+
 			for (Showtime s : theseShowtimes) {
-				ArrayList<Ticket> tickets = new ArrayList<Ticket>(9);
-				for(int i = 0; i < 9; i++) {
+				ArrayList<Ticket> tickets = new ArrayList<Ticket>(10);
+				for (int i = 0; i < 10; i++) {
 					Ticket ticket = new Ticket(Integer.toString(j++), 12.00);
 					tickets.add(ticket);
 				}
@@ -54,53 +69,55 @@ public class DBManager {
 		theatre.setMovies(tempMovies);
 	}
 
-	DBManager() {
-		boolean testing = true;
-		// if using sql, connect to db here.
-		// but we are just using serialized files.
-		// so lets go ahead and create some dummy files, so long as they do not exist.
-		if (testing) {
-			ArrayList<RegisteredUser> tempRegisteredUsers = new ArrayList<RegisteredUser>(); // lets add some good fake
-			// users to this file
-			tempRegisteredUsers.add(new RegisteredUser("Richard Kickem", "outtaGum", null, null, null, "101 URB St"));
-			tempRegisteredUsers.add(new RegisteredUser("Ernest Dude", "password", null, null, null, "444 Cyprus St"));
-			tempRegisteredUsers.add(new RegisteredUser("Mann Hecker", "p@5sw0rd", null, null, null, "Earth"));
-			tempRegisteredUsers.add(new RegisteredUser("Robert'); DROP TABLE Students;--", "xkcd327!", null, null, null,
-					"118 1 Ave NE"));
-			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
-			tempTheatres.add(new Theatre("Chinook", 500));
-//			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
-			ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
-			tempMovies.add(new Movie("Batman", null, "Comic", "A bat struggles to act human"));
-			tempMovies.add(new Movie("Manbat", null, "Documentary", "A human struggles to act like a bat"));
-			tempMovies.add(new Movie("Scream", null, "boo.", "AAAAAAAAAAAAAAAAAH!"));
+	public User verifyLogin(String email, String password) { //TODO Use HashMap<Map<String, String>, RegisteredUser>
+		ArrayList<RegisteredUser> rUsers = importRU();
 
-			for (Movie m : tempMovies) {
-				ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-				theseShowtimes.add(new Showtime(null, 20));
-				// and then lets init the seats for these showtimes.
-				for (Showtime s : theseShowtimes) {
-					s.setSeats();
-				}
-				m.setShowtime(theseShowtimes);
+		for (RegisteredUser ru : rUsers) {
+			if (ru.getEmail().equals(email) && ru.getPassword().equals(password)) {
+				return ru;
 			}
-			
-			tempTheatres.get(0).setMovies(tempMovies);
-
-			writeFile(RUsDB, tempRegisteredUsers);
-			writeFile(theatresDB, tempTheatres);
-			writeFile(moviesDB, tempMovies);
 		}
+
+		return null;
+	}
+	
+	public User verifyRegistration(String name, String email, String password, String cardNumber, String cvv, 
+			String expiryDate, String address, Cart cart) {
+		ArrayList<RegisteredUser> rUsers = importRU();
+		for (RegisteredUser ru : rUsers) {
+			if (ru.getEmail().equals(email)) {
+				return null;
+			}
+		}
+		
+		//TODO: Check if cardNumber is not in database; If yes, return null
+		//TODO: Check if cardNumber has enough funds; If no, return null
+		
+		
+		//TODO: Create user in database, then return the user object
+		
+//		RegisteredUser newUser = new RegisteredUser(name, email, password, cardNumber, cvv, expiryDate, address);
+//		rUsers.add(newUser);
+//		setRU(rUsers);
+//		
+//		return newUser;
+		
+		return null;
 	}
 
-	
-	private User verifyLogin(String email, String password) {
-		HashMap<Map<String, String>, RegisteredUser> rUsers = new HashMap<Map<String, String>, RegisteredUser>();
-		return rUsers.get(new Map<String, String>(email, password));
-	}
-	
 	@SuppressWarnings("unchecked")
 	ArrayList<RegisteredUser> importRU() {
+
+		File f = new File(RUsDB);
+		if (!f.exists() && !f.isDirectory()) {// if the file dos not exist yet
+			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
+			tempRUs.add(new RegisteredUser("Bob Roberts",  "emailHere", "password",
+					 new Cart(),
+					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
+			tempRUs.add(new RegisteredUser("Billy Bob", "emailHere", "p@s5w0rD", new Cart(), new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
+			setRU(tempRUs);
+		}
+
 		// open RUs file, import all registered users into here.
 		return (ArrayList<RegisteredUser>) readFile(RUsDB);
 	}

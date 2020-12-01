@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import Model.Movie;
 import View.*;
 
 public class ViewController {
@@ -19,9 +20,7 @@ public class ViewController {
 	private TicketPaymentGUI payTicket;
 	private RegisterGUI registerMenu;
 	
-	//Temp variable for testing
-	private boolean loggedIn;
-	
+	boolean loggedIn = false;
 	//Used to keep track of previously used vouchers so you cant apply the same voucher to
 	//the same purchase
 	private ArrayList<String> prevVouchers;
@@ -49,7 +48,22 @@ public class ViewController {
 	private class ViewMoviesButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			moviesMenu = new MoviesGUI(system.getMovieDatabase());
+			
+			ArrayList<Movie> movieDatabase;
+			
+			if(system.getIsRegistered()) {
+				movieDatabase = system.getMovieDatabase();
+			}
+			else {
+				movieDatabase = new ArrayList<Movie>();
+				for(Movie m : system.getMovieDatabase()) {
+					if(!m.forMembers()) {
+						movieDatabase.add(m);
+					}
+				}
+			}
+			
+			moviesMenu = new MoviesGUI(movieDatabase, system.getIsRegistered());
 			
 			moviesMenu.addCreateTicketListener(new CreateTicketListener());
 		}
@@ -64,14 +78,10 @@ public class ViewController {
 	private class ViewCartButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Create view cart GUI here
-			viewCart = new CartGUI(500, 400);
+			viewCart = new CartGUI(null);
+			
 			viewCart.addProceedListener(new ProceedButtonListener());
 			viewCart.addExitListener(new CartExitButtonListener());
-			
-			//TODO: Get user cart info (this format of showing the ticket is something I quickly thought up, can change)
-			String [] tmpTest = {"Blade Runner 2077, 1:00 PM, A1, $6.99", "Arrival, 7:00 PM, F6, $8.99", "Ex Machina, 10:00 AM, A2, $6.99"};
-			viewCart.updateCartGUI(tmpTest);
 		}
 	}
 	
@@ -98,6 +108,7 @@ public class ViewController {
 	private class RegisterButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			loginMenu.dispose();
 			registerMenu = new RegisterGUI();
 			registerMenu.addRegisterListener(new RegisterListener());
 		}
@@ -124,8 +135,9 @@ public class ViewController {
 				loginMenu.dispose();
 				return;
 			}
-			
-			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, or your credit card does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+
+			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, "
+					+ "or your credit card does not exist or doesn't have enough funds", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -160,43 +172,32 @@ public class ViewController {
 				return;
 			}
 			
-
-			//TODO: Check if tickedID can cancel
+			refundTicket.dispose();
 			
-
-			if(loggedIn) {
-				refundTicket.RUCancel();
-				refundTicket.addYesConfButtonListener(new YesRefundButtonListener());
-				refundTicket.addNoConfButtonListener(new NoRefundButtonListener());
-			}else {
-				refundTicket.regCancel();
-				refundTicket.addYesConfButtonListener(new YesRefundButtonListener());
-				refundTicket.addNoConfButtonListener(new NoRefundButtonListener());
+			if(!system.getIsRegistered()) {
+				int choice = JOptionPane.showConfirmDialog(null, "Do you want to login/register before going ahead?"
+						+ "\n(The theatre will only refund 85% of the ticket price if you are unregistered)", "NOTICE", JOptionPane.YES_NO_OPTION);
+				if(choice == JOptionPane.YES_OPTION) {
+					loginMenu = new LoginGUI();
+					
+					loginMenu.addLoginListener(new LoginListener());
+					loginMenu.addRegisterListener(new RegisterButtonListener());
+					
+					return;
+				}
 			}
-		}
-	}
-	private class YesRefundButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			//TODO: Update database/send email with credit
-			
 
-			if(loggedIn) {
-				refundTicket.displayMessage("Successfully cancelled ticket");
-				refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
-			}else {
-				String email = refundTicket.getEmail();
-				
-				refundTicket.displayMessage("Successfully cancelled ticket");
-				refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
+			String result = system.refundTicket(ticketID);
+			
+			if(result != null) {
+				JOptionPane.showMessageDialog(null, "Here is your voucher code: " +result 
+						+"\n(Only useable within a year)", "Error", JOptionPane.ERROR_MESSAGE);
+
+				return;
 			}
 			
-		}
-	}
-	private class NoRefundButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			refundTicket.dispatchEvent(new WindowEvent(refundTicket, WindowEvent.WINDOW_CLOSING));
+			JOptionPane.showMessageDialog(null, "Sorry, ticket could not be refunded. Either your ticket does not exist "
+					+ "or your showtime is within 72 hours.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -271,6 +272,7 @@ public class ViewController {
 			payTicket.dispatchEvent(new WindowEvent(payTicket, WindowEvent.WINDOW_CLOSING));
 		}
 	}
+	
 	
 	public MainMenuGUI getMainMenu() {
 		return mainMenu;

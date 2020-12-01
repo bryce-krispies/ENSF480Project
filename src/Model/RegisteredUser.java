@@ -2,17 +2,17 @@ package Model;
 
 public class RegisteredUser extends User{
 	private String name;
+	private String email;
 	private String password;
-	private Credit credit;
 	private Cart cart;
 	private CreditCard creditCard;
 	private String address;
 
-	public RegisteredUser(String name, String password, Credit credit, Cart cart, CreditCard creditCard, String address) {
+	public RegisteredUser(String name, String email, String password, Cart cart, CreditCard creditCard, String address) {
 		super();
 		this.setName(name);
+		this.setEmail(email);
 		this.setPassword(password);
-		this.setCredit(credit);
 		this.setCart(cart);
 		this.setCreditCard(creditCard);
 		this.setAddress(address);
@@ -20,9 +20,9 @@ public class RegisteredUser extends User{
 
 	public RegisteredUser() {
 		super();
-		this.setName("Bryce");
+		this.setName(null);
+		this.setEmail(null);
 		this.setPassword(null);
-		this.setCredit(null);
 		this.setCart(null);
 		this.setCreditCard(null);
 		this.setAddress(null);
@@ -35,6 +35,14 @@ public class RegisteredUser extends User{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getPassword() {
 		return password;
@@ -42,14 +50,6 @@ public class RegisteredUser extends User{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Credit getCredit() {
-		return credit;
-	}
-
-	public void setCredit(Credit credit) {
-		this.credit = credit;
 	}
 
 	public Cart getCart() {

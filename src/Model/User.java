@@ -1,5 +1,13 @@
 package Model;
 
 public class User {
-	Cart cart;
+	private Cart cart;
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 }
