@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import Controller.PaymentController;
 
-public class Payment implements Serializable{
+public class Payment implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7108942008533232865L;
-	private boolean hasCompleted;
+     * 
+     */
+    private static final long serialVersionUID = 7108942008533232865L;
+    private boolean hasCompleted;
     private PaymentController paymentController;
     private Account account;
 
@@ -17,13 +17,13 @@ public class Payment implements Serializable{
         hasCompleted = false;
     }
 
-    public void makePaymentToTheatre(Account account, float total) {
+    public void makePaymentToTheatre(Account account, double total) {
         account.updateBalance(total);
     }
 
-    public void refundPaymentToUser(Ticket ticket) {
-        ticket.cancelTicket();
-        account.updateBalance(-ticket.getPrice());
+    public void refundPaymentToUser(double amountRefunded) {
+
+        account.updateBalance(-amountRefunded);
     }
 
 }

@@ -43,6 +43,10 @@ public class TRS {
 		return user;
 	}
 
+	public Theatre getTheatre() {
+		return theatre;
+	}
+
 	public String refundTicket(int id) {
 		// TODO Write
 		return null;
