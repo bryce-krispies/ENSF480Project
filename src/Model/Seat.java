@@ -1,7 +1,14 @@
 package Model;
 
-public class Seat {
-    public enum type {
+import java.io.Serializable;
+
+public class Seat implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3945050414515362123L;
+
+	public enum type {
         forRegUser, forEveryone
     }
 

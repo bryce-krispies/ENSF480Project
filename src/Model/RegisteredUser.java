@@ -1,6 +1,7 @@
 package Model;
 
-public class RegisteredUser extends User{
+public class RegisteredUser extends User {
+	private static final long serialVersionUID = -4469661400478130010L;
 	private String name;
 	private String email;
 	private String password;

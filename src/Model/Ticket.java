@@ -1,9 +1,14 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Ticket {
-    private Showtime showTime;
+public class Ticket implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6991294194561132682L;
+	private Showtime showTime;
     private Seat seat;
     private String id;
     private double price;
@@ -62,6 +67,19 @@ public class Ticket {
 
     public boolean isRefundable() {
         return (purchaseTime.isBefore(showTime.getTime().minusHours(72)));
+    }
+	
+    @Override
+    public String toString() {
+        String res = "";
+        res += this.getShowtime().getMovie().getName();
+        res += ", ";
+        res += this.getShowtime().getTime.toString();
+        res += ", ";
+        res += this.getSeat().getID();
+        res += ", $";
+        res += this.getPrice();
+        return res;
     }
 
 }

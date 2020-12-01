@@ -20,37 +20,45 @@ import Model.Theatre;
 import Model.Ticket;
 
 public class TRS {
-	
+
 	private boolean isRegistered;
 	private User user;
 	private Theatre theatre;
 	private DBManager dbMan;
 	private ViewController viewCont;
 	private PaymentController payCont;
-	
+
 	public TRS(ViewController viewCont) {
 		isRegistered = false;
 		user = new User();
-		theatre = new Theatre("Scotiabank Theatre", 50); //TODO Fix the account quantity
+		theatre = new Theatre("Scotiabank Theatre", 50); // TODO Fix the account quantity
 		dbMan = new DBManager(theatre);
 		this.viewCont = viewCont;
 		payCont = new PaymentController();
 	}
-	
+
 	public ArrayList<Movie> getMovieDatabase() {
 		return theatre.getMovies();
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public Theatre getTheatre() {
+		return theatre;
+	}
+
 	public String refundTicket(int id) {
-		//TODO Write
+		// TODO Write
 		return null;
 	}
-	
+
 	public boolean addTicketToCart(String movie, String showtime, String seatID) {
-		
+
 		Seat s = theatre.getMovie(movie).getSpecificShowtime(showtime).getSeat(seatID);
-		
-		if(s != null) {
+
+		if (s != null) {
 			s.reserveSeat();
 			user.getCart().addTicket(s.getTicket());
 		}
@@ -67,8 +75,8 @@ public class TRS {
  	public boolean login(String email, String password) {
 		
 		User registeredUser = dbMan.verifyLogin(email, password);
-		
-		if(registeredUser != null) {
+
+		if (registeredUser != null) {
 			Cart previousCart = user.getCart();
 			user = registeredUser;
 			user.setCart(previousCart);
@@ -87,10 +95,10 @@ public class TRS {
 			
 			//viewCont.getMainMenu().updateLoginView(user.getName());
 			isRegistered = true;
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 	
@@ -102,10 +110,10 @@ public class TRS {
 		if(registeredUser == null) {
 			return false;
 		}
-		
+
 		return login(email, password);
 	}
-	
+
 	public boolean getIsRegistered() {
 		return isRegistered;
 	}
