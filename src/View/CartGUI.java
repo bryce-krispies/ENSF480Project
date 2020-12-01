@@ -86,14 +86,14 @@ public class CartGUI extends JFrame{
 		return (String)selectMovie.getSelectedItem();
 	}
 	
-//	public void updateCartGUI(String [] tickets) {
-//		cartContents.setText(null);
-//		selectMovie.removeAllItems();
-//		for(String s: tickets) {
-//			cartContents.append(s + "\n");
-//			selectMovie.addItem(s);
-//		}
-//	}
+	public void updateCartGUI(String [] tickets) {
+		cartContents.setText(null);
+		for(String s: tickets) {
+			cartContents.append(s + "\n");
+		}
+		
+		setVisible(true);
+	}
 	
 	
 	public void addProceedListener(ActionListener proceedListener) {
