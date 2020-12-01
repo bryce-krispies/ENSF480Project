@@ -82,6 +82,15 @@ public class ViewController {
 			
 			viewCart.addProceedListener(new ProceedButtonListener());
 			viewCart.addExitListener(new CartExitButtonListener());
+			
+			/* Update JTextArea showing cart
+			ArrayList<Ticket> userTickets = system.getUser().getCart().getTickets();
+			String [] cartContents = new String[userTickets.size()];
+			for(int i = 0; i < userTickets.size(); i++) {
+				cartContents[i] = userTickets.get(i).toString();
+			}
+			viewCart.updateCartGUI(cartContents);
+			*/
 		}
 	}
 	
@@ -212,13 +221,18 @@ public class ViewController {
 			payTicket.addVoucherSubmitListener(new SubmitVoucherButtonListener());
 			payTicket.addPayListener(new PayButtonListener());
 			prevVouchers = new ArrayList<String>();
-			if(loggedIn) {
+			if(system.getIsRegistered()) {
 				//TODO: Get RU payment info
 				String accNum = "478382930458";
 				String CVV = "738";
 				String expDate = "08/22";
 				
 				payTicket.setPaymentInfo(accNum, CVV, expDate);
+				
+				/* Get RU Credit Card info
+				CreditCard userCard = system.getUser().getCreditCard();
+				payTicket.setPaymentInfo(userCard.getNumber(), userCard.getCVV(), userCard.getExpiryDate());
+				*/
 			}
 		}
 	}
