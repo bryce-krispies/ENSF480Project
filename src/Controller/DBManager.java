@@ -80,19 +80,28 @@ public class DBManager {
 
 		return null;
 	}
-
-	public User verifyRegistration(String email, String cardNumber) {
+	
+	public User verifyRegistration(String name, String email, String password, String cardNumber, String cvv, 
+			String expiryDate, String address, Cart cart) {
 		ArrayList<RegisteredUser> rUsers = importRU();
 		for (RegisteredUser ru : rUsers) {
 			if (ru.getEmail().equals(email)) {
 				return null;
 			}
 		}
-
-		// TODO: Check if cardNumber is not in database; If yes, return null
-		// TODO: Check if cardNumber has enough funds; If no, return null
-
-		// TODO: Create user in database, then return the user object
+		
+		//TODO: Check if cardNumber is not in database; If yes, return null
+		//TODO: Check if cardNumber has enough funds; If no, return null
+		
+		
+		//TODO: Create user in database, then return the user object
+		
+//		RegisteredUser newUser = new RegisteredUser(name, email, password, cardNumber, cvv, expiryDate, address);
+//		rUsers.add(newUser);
+//		setRU(rUsers);
+//		
+//		return newUser;
+		
 		return null;
 	}
 

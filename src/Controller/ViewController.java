@@ -78,14 +78,10 @@ public class ViewController {
 	private class ViewCartButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Create view cart GUI here
-			viewCart = new CartGUI(500, 400);
+			viewCart = new CartGUI(null);
+			
 			viewCart.addProceedListener(new ProceedButtonListener());
 			viewCart.addExitListener(new CartExitButtonListener());
-			
-			//TODO: Get user cart info (this format of showing the ticket is something I quickly thought up, can change)
-			String [] tmpTest = {"Blade Runner 2077, 1:00 PM, A1, $6.99", "Arrival, 7:00 PM, F6, $8.99", "Ex Machina, 10:00 AM, A2, $6.99"};
-			viewCart.updateCartGUI(tmpTest);
 		}
 	}
 	
@@ -139,6 +135,8 @@ public class ViewController {
 				loginMenu.dispose();
 				return;
 			}
+			
+			//TODO Fix
 			
 			JOptionPane.showMessageDialog(null, "Sorry, there is either an account with the same email, "
 					+ "or your credit card does not exist or doesn't have enough funds", "Error", JOptionPane.ERROR_MESSAGE);
