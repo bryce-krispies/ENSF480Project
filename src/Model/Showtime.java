@@ -51,7 +51,8 @@ public class Showtime {
             tickets.get(i).setSeat(seat);
         }
         
-        for (; i < numOfCustomers+1; i++) {
+        //TODO Fix
+        for (; i < numOfCustomers; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
