@@ -29,6 +29,7 @@ public class RegisterGUI extends JFrame {
 	private static final int FRAME_WIDTH = 380;
 	private static final int FRAME_HEIGHT = 250;
 	
+	//TODO Make nicer
 	public RegisterGUI(){
 		super("Register");
 
@@ -43,7 +44,7 @@ public class RegisterGUI extends JFrame {
 	    add(BorderLayout.SOUTH, buttonBar);
 	    
 	    JPanel inputArea = new JPanel(new GridLayout(0, 2));
-	    JLabel nameLabel = new JLabel("  Enter Email");
+	    JLabel nameLabel = new JLabel("  Enter Name");
 	    nameField = new JTextField(10);
 	    JLabel emailLabel = new JLabel("  Enter Email");
 	    emailField = new JTextField(10);
@@ -57,6 +58,8 @@ public class RegisterGUI extends JFrame {
 	    expiryDateField = new JTextField(10);
 	    JLabel addressLabel = new JLabel("  Enter Home Address");
 	    addressField = new JTextField(10);
+	    inputArea.add(nameLabel);
+	    inputArea.add(nameField);
      	inputArea.add(emailLabel);
 	    inputArea.add(emailField);
 	    inputArea.add(passwordLabel);
@@ -76,6 +79,7 @@ public class RegisterGUI extends JFrame {
 		
 	public void addRegisterListener(ActionListener a) { registerButton.addActionListener(a); }
 	
+	public JTextField getNameField() { return nameField; }
 	public JTextField getEmailField() { return emailField; }
 	public JTextField getCardNumField() { return cardNumField; }
 	public JTextField getCVVField() { return cvvField; }

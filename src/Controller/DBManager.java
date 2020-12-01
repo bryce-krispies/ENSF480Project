@@ -43,7 +43,7 @@ public class DBManager {
 		for (Movie m : tempMovies) {
 			ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
 			theseShowtimes
-					.add(new Showtime(LocalDateTime.now().plusHours((long) (Math.random() * (12 - 2 + 1) + 2)), 9)); // TODO
+					.add(new Showtime(LocalDateTime.now().plusHours((long) (Math.random() * (12 - 2 + 1) + 2)), 10)); // TODO
 																														// Fix
 																														// timing
 																														// logic
@@ -111,9 +111,7 @@ public class DBManager {
 		File f = new File(RUsDB);
 		if (!f.exists() && !f.isDirectory()) {// if the file dos not exist yet
 			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
-			tempRUs.add(new RegisteredUser("Bob Roberts",  "emailHere", "password",
-					 new Cart(),
-					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
+			tempRUs.add(new RegisteredUser("Bob Roberts",  "emailHere", "password", new Cart(), new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
 			tempRUs.add(new RegisteredUser("Billy Bob", "emailHere", "p@s5w0rD", new Cart(), new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
 			setRU(tempRUs);
 		}

@@ -90,7 +90,7 @@ public class ViewController {
 	private class LoginListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-	  		  if(loginMenu.getEmailField().getText().length() < 1 || loginMenu.getPasswordField().getPassword().length < 1) {
+	  		  if(loginMenu.getEmailField().getText().isBlank() || loginMenu.getPasswordField().getPassword().length < 1) {
 				  JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
 				  return;
 			  }
@@ -98,6 +98,7 @@ public class ViewController {
 	  		  boolean result = system.login(loginMenu.getEmailField().getText(), new String(loginMenu.getPasswordField().getPassword()));
 	  		  
 			  if(result) {
+				  //mainMenu.updateLoginView(user);
 				  loginMenu.dispose();
 				  return;
 			  }
@@ -119,18 +120,21 @@ public class ViewController {
 	public class RegisterListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-	  		if(registerMenu.getEmailField().getText().length() < 1 || registerMenu.getPasswordField().getPassword().length < 1 || registerMenu.getCardNumField().getText().length() < 1 || 
-	  			registerMenu.getCVVField().getText().length() < 1 || registerMenu.getExpiryDateField().getText().length() < 1 || registerMenu.getAddressField().getText().length() < 1) {
+	  		if(registerMenu.getNameField().getText().isBlank() || registerMenu.getEmailField().getText().isBlank() 
+	  				|| registerMenu.getPasswordField().getPassword().length < 1 || registerMenu.getCardNumField().getText().isBlank()
+	  				|| registerMenu.getCVVField().getText().isBlank() || registerMenu.getExpiryDateField().getText().isBlank() 
+	  				|| registerMenu.getAddressField().getText().isBlank()) {
 	  			JOptionPane.showMessageDialog(null, "You must have an input for all fields", "Error", JOptionPane.ERROR_MESSAGE);
 	  			return;
 	  		}
 	  		
-	  		boolean result = system.register(registerMenu.getEmailField().getText(), new String(registerMenu.getPasswordField().getPassword()), 
-	  							registerMenu.getCardNumField().getText(), registerMenu.getCVVField().getText(), 
-	  							registerMenu.getExpiryDateField().getText(), registerMenu.getAddressField().getText());
+	  		boolean result = system.register(registerMenu.getNameField().getText(), registerMenu.getEmailField().getText(), 
+	  								new String(registerMenu.getPasswordField().getPassword()), registerMenu.getCardNumField().getText(), 
+	  								registerMenu.getCVVField().getText(), registerMenu.getExpiryDateField().getText(), 
+	  								registerMenu.getAddressField().getText());
 	  		
 			if(result) {
-				mainMenu.updateLoginView(registerMenu.getEmailField().getText());
+				mainMenu.updateLoginView(registerMenu.getNameField().getText());
 				registerMenu.dispose();
 				loginMenu.dispose();
 				return;
@@ -206,20 +210,23 @@ public class ViewController {
 	private class ProceedButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String selection = viewCart.getCartSelection();
 			
-			payTicket = new TicketPaymentGUI(480, 270, selection, loggedIn);
-			payTicket.addVoucherSubmitListener(new SubmitVoucherButtonListener());
-			payTicket.addPayListener(new PayButtonListener());
-			prevVouchers = new ArrayList<String>();
-			if(loggedIn) {
-				//TODO: Get RU payment info
-				String accNum = "478382930458";
-				String CVV = "738";
-				String expDate = "08/22";
-				
-				payTicket.setPaymentInfo(accNum, CVV, expDate);
-			}
+			
+			
+//			String selection = viewCart.getCartSelection();
+//			
+//			payTicket = new TicketPaymentGUI(480, 270, selection, loggedIn);
+//			payTicket.addVoucherSubmitListener(new SubmitVoucherButtonListener());
+//			payTicket.addPayListener(new PayButtonListener());
+//			prevVouchers = new ArrayList<String>();
+//			if(loggedIn) {
+//				//TODO: Get RU payment info
+//				String accNum = "478382930458";
+//				String CVV = "738";
+//				String expDate = "08/22";
+//				
+//				payTicket.setPaymentInfo(accNum, CVV, expDate);
+//			}
 		}
 	}
 	private class CartExitButtonListener implements ActionListener{

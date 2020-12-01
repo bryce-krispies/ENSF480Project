@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Model.Cart;
+import Model.Credit;
+import Model.CreditCard;
 import Model.Movie;
 import Model.RegisteredUser;
 import Model.Seat;
@@ -56,7 +58,13 @@ public class TRS {
 		return false;
 	}
 	
-	public boolean login(String email, String password) {
+	public boolean checkoutCart(CreditCard card, Credit credit) {
+		return false;
+		//credit can be null
+		//call some method in pay controller
+	}
+	
+ 	public boolean login(String email, String password) {
 		
 		User registeredUser = dbMan.verifyLogin(email, password);
 		
@@ -65,6 +73,7 @@ public class TRS {
 			user = registeredUser;
 			user.setCart(previousCart);
 			
+			//TODO
 //			if(true/* If today's date is past 1 year since the registered user's last payment date */) {
 //				int choice = JOptionPane.showConfirmDialog(null, 
 //								"It seems you haven't payed your yearly subscription. Want to renew?", "NOTICE", JOptionPane.YES_NO_OPTION);
@@ -85,9 +94,10 @@ public class TRS {
 		return false;
 	}
 	
-	public boolean register(String email, String password, String cardNumber, String cvv, String expiryDate, String address) {
+	public boolean register(String name, String email, String password, String cardNumber, String cvv, String expiryDate, String address) {
 		
-		User registeredUser = dbMan.verifyRegistration(null, email, password, cardNumber, cvv, expiryDate, address, user.getCart());
+		//TODO Review function
+		User registeredUser = dbMan.verifyRegistration(name, email, password, cardNumber, cvv, expiryDate, address, user.getCart());
 		
 		if(registeredUser == null) {
 			return false;
@@ -100,5 +110,8 @@ public class TRS {
 		return isRegistered;
 	}
 	
+	public User getUser() {
+		return user;
+	}
 
 }
