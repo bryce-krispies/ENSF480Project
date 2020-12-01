@@ -66,10 +66,37 @@ public class TRS {
 		return false;
 	}
 	
+	/* Old checkoutCart
 	public boolean checkoutCart(CreditCard card, Credit credit) {
 		return false;
 		//credit can be null
 		//call some method in pay controller
+	}
+	*/
+	
+	public Credit verifyVoucher(String code) {
+		//TODO: Query database and get back Credit object
+		
+		Credit tmp = new Credit(code, 3.0, LocalDateTime.of(2021, 1, 1, 1, 1));
+		return tmp;
+	}
+	
+	public void updateVoucher(String code, double newValue) {
+		//TODO: Query database and update voucher with 'code' to newValue (UPDATE .... SET ... WHERE)
+		
+		return;
+	}
+	
+	public void deleteVoucher(String code) {
+		//TODO: Query database to remove a voucher with 'code' DELETE FROM ... WHERE
+		
+		return;
+	}
+	
+	public boolean checkoutCard(String accNumber, String CVV, String expDate) {
+		//TODO: Call method in pay controller
+		
+		return true;
 	}
 	
  	public boolean login(String email, String password) {
