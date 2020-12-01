@@ -220,7 +220,7 @@ public class ViewController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			
+			//TODO: Change selection to ArrayList of Tickets
 			
 //			String selection = viewCart.getCartSelection();
 //			
@@ -275,21 +275,23 @@ public class ViewController {
 				}
 			}
 			
-			//TODO: Get value of voucher
-			double voucherValue = 3;
+			Credit vou = system.verifyVoucher(voucher);
+			if(vou == null || !vou.isValid()) {
+				payTicket.printErrorMessage("Error: Voucher code not valid");
+				return;
+			}
+			double voucherValue = vou.getValue();
 			
 			prevVouchers.add(voucher);
 			
 			double currentPrice = payTicket.getPrice();
 			double newTotal = currentPrice - voucherValue;
-			System.out.println(currentPrice);
 			if(newTotal < 0) {
-				//TODO: Set value of voucher to abs(newTotal) and update database
 				voucherValue = Math.abs(newTotal);
+				system.updateVoucher(voucher, voucherValue);
 				newTotal = 0;
-				
 			}else {
-				//TODO: Remove voucher from database
+				system.removeVoucher(voucher);
 			}
 			
 			payTicket.updateTotalDue(newTotal);
@@ -298,9 +300,22 @@ public class ViewController {
 	private class PayButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//TODO: Add ticket to database and remove item from shopping cart
-			//TODO: Check payment info?
-
+			//TODO: Add ticket to database???
+			
+			boolean success = system.checkoutCart(payTicket.getCardNumber(), payTicket.getCVV(), payTicket.getExpiryDate());
+			
+			if(!success) {
+				payTicket.printErrorMessage("Error: Payment could not complete");
+				return;
+			}
+			
+			//Clear cart
+			system.getUser().setCart(new Cart());
+			String [] cartContents = new String[1];
+			cartContents[0] = "";
+			viewCart.updateCartGUI(cartContents);
+			
+			
 			payTicket.displayMessage("Checkout Successful");
 			payTicket.dispatchEvent(new WindowEvent(payTicket, WindowEvent.WINDOW_CLOSING));
 		}
