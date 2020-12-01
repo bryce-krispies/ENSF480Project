@@ -68,5 +68,18 @@ public class Ticket implements Serializable{
     public boolean isRefundable() {
         return (purchaseTime.isBefore(showTime.getTime().minusHours(72)));
     }
+	
+    @Override
+    public String toString() {
+        String res = "";
+        res += this.getShowtime().getMovie().getName();
+        res += ", ";
+        res += this.getShowtime().getTime.toString();
+        res += ", ";
+        res += this.getSeat().getID();
+        res += ", $";
+        res += this.getPrice();
+        return res;
+    }
 
 }
