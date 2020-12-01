@@ -1,6 +1,12 @@
 package Model;
 
-public class CreditCard {
+import java.io.Serializable;
+
+public class CreditCard implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6085296104233230803L;
 	private String number;
 	private int CVV;
 	private String expiryDate;

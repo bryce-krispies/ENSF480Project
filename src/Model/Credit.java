@@ -1,8 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Credit{
+public class Credit implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9193299566409503722L;
 	private String code;
 	private double value;
 	private LocalDateTime date;

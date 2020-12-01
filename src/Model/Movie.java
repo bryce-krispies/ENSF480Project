@@ -1,10 +1,15 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Movie {
-    private String name;
+public class Movie implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -347002652355008065L;
+	private String name;
     private LocalDateTime releaseDate;
 
     private String genre;

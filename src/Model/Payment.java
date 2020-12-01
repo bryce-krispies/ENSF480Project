@@ -1,9 +1,15 @@
 package Model;
 
+import java.io.Serializable;
+
 import Controller.PaymentController;
 
-public class Payment {
-    private boolean hasCompleted;
+public class Payment implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7108942008533232865L;
+	private boolean hasCompleted;
     private PaymentController paymentController;
     private Account account;
 

@@ -75,13 +75,7 @@ public class DBManager {
 		// but we are just using serialized files.
 		// so lets go ahead and create some dummy files, so long as they do not exist.
 		if (testing) {
-			ArrayList<RegisteredUser> tempRegisteredUsers = new ArrayList<RegisteredUser>(); // lets add some good fake
-			// users to this file
-			tempRegisteredUsers.add(new RegisteredUser("Richard Kickem", "outtaGum", null, null, null, "101 URB St"));
-			tempRegisteredUsers.add(new RegisteredUser("Ernest Dude", "password", null, null, null, "444 Cyprus St"));
-			tempRegisteredUsers.add(new RegisteredUser("Mann Hecker", "p@5sw0rd", null, null, null, "Earth"));
-			tempRegisteredUsers.add(new RegisteredUser("Robert'); DROP TABLE Students;--", "xkcd327!", null, null, null,
-					"118 1 Ave NE"));
+//			ArrayList<Regi/ve NE"));
 			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
 			tempTheatres.add(new Theatre("Chinook", 500));
 //			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
@@ -102,7 +96,7 @@ public class DBManager {
 
 			tempTheatres.get(0).setMovies(tempMovies);
 
-			writeFile(RUsDB, tempRegisteredUsers);
+//			writeFile(RUsDB, tempRegisteredUsers);
 			writeFile(theatresDB, tempTheatres);
 			writeFile(moviesDB, tempMovies);
 		}
@@ -147,27 +141,29 @@ public class DBManager {
 			tempRUs.add(new RegisteredUser("Billy Bob", "p@s5w0rD",
 					new Credit("zuyfnw0xc", 16.99, LocalDateTime.now()), new Cart(),
 					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
+			tempRUs.get(0).setEmail("bob.roberts@example.com");
+			tempRUs.get(1).setEmail("billy.bob@example.com");
 			setRU(tempRUs);
 		}
-
+		ArrayList<RegisteredUser> registeredUsers = (ArrayList) readFile(RUsDB);
 		// open RUs file, import all registered users into here.
-		return (ArrayList<RegisteredUser>) readFile(RUsDB);
+		return registeredUsers;
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Theatre> importTheatres() {
 		// open theatres file, import all into here.
-		return (ArrayList<Theatre>) readFile(theatresDB);
+		return (ArrayList) readFile(theatresDB);
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Movie> importMovies() {
-		return (ArrayList<Movie>) readFile(moviesDB);
+		return (ArrayList) readFile(moviesDB);
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Showtime> importShowtimes() { // currently does nothing, as showtimes are tied to a movie.
-		return (ArrayList<Showtime>) readFile(showtimesDB);
+		return (ArrayList) readFile(showtimesDB);
 	}
 
 	ArrayList<Seat> importSeats() { // currently does nothing as seats are tied to a showtime.

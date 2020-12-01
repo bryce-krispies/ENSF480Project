@@ -1,9 +1,14 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Ticket {
-    private Showtime showTime;
+public class Ticket implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6991294194561132682L;
+	private Showtime showTime;
     private Seat seat;
     private String id;
     private double price;

@@ -1,9 +1,14 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Theatre {
-    private String name;
+public class Theatre implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7213051544397598231L;
+	private String name;
     private ArrayList<Movie> movies;
     private Account account;
 
