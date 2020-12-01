@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import Model.Ticket;
 
 public class CartGUI extends JFrame{
 	private JPanel cartPanel;
@@ -24,10 +27,17 @@ public class CartGUI extends JFrame{
 	
 	private JComboBox<String> selectMovie;
 	
-	public CartGUI(int width, int height) {
+	private ArrayList<Ticket> tickets;
+	
+	public CartGUI(ArrayList<Ticket> ticketDatabase) {
 		super("View Cart");
-		setSize(width, height);
+		setSize(500, 400);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		tickets = ticketDatabase;
+		for(Ticket t : tickets) {
+			selectMovie.addItem(t.getID());
+		}
 		
 		cartPanel = new JPanel();
 		cartPanel.setLayout(new BorderLayout(5, 5));
@@ -68,6 +78,7 @@ public class CartGUI extends JFrame{
 		cartPanel.add(userInput, BorderLayout.SOUTH);
 		
 		add(cartPanel);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
@@ -75,16 +86,15 @@ public class CartGUI extends JFrame{
 		return (String)selectMovie.getSelectedItem();
 	}
 	
-	public void updateCartGUI(String [] tickets) {
-		cartContents.setText(null);
-		selectMovie.removeAllItems();
-		for(String s: tickets) {
-			cartContents.append(s + "\n");
-			selectMovie.addItem(s);
-		}
-		
-		setVisible(true);
-	}
+//	public void updateCartGUI(String [] tickets) {
+//		cartContents.setText(null);
+//		selectMovie.removeAllItems();
+//		for(String s: tickets) {
+//			cartContents.append(s + "\n");
+//			selectMovie.addItem(s);
+//		}
+//	}
+	
 	
 	public void addProceedListener(ActionListener proceedListener) {
 		proceedButton.addActionListener(proceedListener);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Model.Cart;
 import Model.Movie;
 import Model.RegisteredUser;
 import Model.Seat;
@@ -39,6 +40,7 @@ public class TRS {
 	}
 	
 	public String refundTicket(int id) {
+		//TODO Write
 		return null;
 	}
 	
@@ -59,10 +61,9 @@ public class TRS {
 		User registeredUser = dbMan.verifyLogin(email, password);
 		
 		if(registeredUser != null) {
-			//Cart previousCart = user.getCart();
-			//Transfer cart
+			Cart previousCart = user.getCart();
 			user = registeredUser;
-			//user.setCart(previousCart);
+			user.setCart(previousCart);
 			
 //			if(true/* If today's date is past 1 year since the registered user's last payment date */) {
 //				int choice = JOptionPane.showConfirmDialog(null, 
@@ -86,7 +87,7 @@ public class TRS {
 	
 	public boolean register(String email, String password, String cardNumber, String cvv, String expiryDate, String address) {
 		
-		User registeredUser = dbMan.verifyRegistration(email, cardNumber);
+		User registeredUser = dbMan.verifyRegistration(null, email, password, cardNumber, cvv, expiryDate, address, user.getCart());
 		
 		if(registeredUser == null) {
 			return false;

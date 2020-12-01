@@ -13,6 +13,9 @@ import Model.Showtime;
 import Model.Theatre;
 import Model.Ticket;
 import Model.User;
+import Model.Cart;
+import Model.Credit;
+import Model.CreditCard;
 import Model.Movie;
 
 public class DBManager {
@@ -40,8 +43,8 @@ public class DBManager {
 			// and then lets init the seats for these showtimes.
 			
 			for (Showtime s : theseShowtimes) {
-				ArrayList<Ticket> tickets = new ArrayList<Ticket>(9);
-				for(int i = 0; i < 9; i++) {
+				ArrayList<Ticket> tickets = new ArrayList<Ticket>(10);
+				for(int i = 0; i < 10; i++) {
 					Ticket ticket = new Ticket(Integer.toString(j++), 12.00);
 					tickets.add(ticket);
 				}
@@ -66,7 +69,8 @@ public class DBManager {
 		return null;
 	}
 	
-	public User verifyRegistration(String email, String cardNumber) {
+	public User verifyRegistration(String name, String email, String password, String cardNumber, String cvv, 
+			String expiryDate, String address, Cart cart) {
 		ArrayList<RegisteredUser> rUsers = importRU();
 		for(RegisteredUser ru : rUsers) {
 			if(ru.getEmail().equals(email)){
@@ -79,6 +83,13 @@ public class DBManager {
 		
 		
 		//TODO: Create user in database, then return the user object
+		
+//		RegisteredUser newUser = new RegisteredUser(name, email, password, cardNumber, cvv, expiryDate, address);
+//		rUsers.add(newUser);
+//		setRU(rUsers);
+//		
+//		return newUser;
+		
 		return null;
 	}
 	

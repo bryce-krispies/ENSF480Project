@@ -50,19 +50,12 @@ public class Showtime {
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
-
-        for (; i < numOfCustomers; i++) {
+        
+        for (; i < numOfCustomers+1; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
-        
-        //TODO Remove
-//        for(int j = 0; j < seats.size(); j++) {
-//        	System.out.println(seats.size());
-//        	System.out.println(seats.get(j).getEnumType());
-//        }
-        
     }
     
     public void setTickets(ArrayList<Ticket> tickets) {
