@@ -1,10 +1,15 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Showtime {
-    private Movie movie;
+public class Showtime implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4671397092523542048L;
+	private Movie movie;
     private ArrayList<Ticket> tickets;
     private ArrayList<Seat> seats;
     private LocalDateTime time;

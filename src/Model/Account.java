@@ -1,7 +1,13 @@
 package Model;
 
-public class Account {
-    private double balance;
+import java.io.Serializable;
+
+public class Account implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1585844121655089695L;
+	private double balance;
 
     public Account(double balance) {
         this.balance = balance;

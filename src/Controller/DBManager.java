@@ -69,6 +69,7 @@ public class DBManager {
 		theatre.setMovies(tempMovies);
 	}
 
+
 	public User verifyLogin(String email, String password) { //TODO Use HashMap<Map<String, String>, RegisteredUser>
 		ArrayList<RegisteredUser> rUsers = importRU();
 
@@ -111,31 +112,31 @@ public class DBManager {
 		File f = new File(RUsDB);
 		if (!f.exists() && !f.isDirectory()) {// if the file dos not exist yet
 			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
-			tempRUs.add(new RegisteredUser("Bob Roberts",  "emailHere", "password",
-					 new Cart(),
+			tempRUs.add(new RegisteredUser("Bob Roberts",  "bob.roberts@example.com", "password", new Cart(),
 					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
-			tempRUs.add(new RegisteredUser("Billy Bob", "emailHere", "p@s5w0rD", new Cart(), new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
+			tempRUs.add(new RegisteredUser("Billy Bob", "billy.bob@example.com", "p@s5w0rD", , new Cart(),
+					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
 			setRU(tempRUs);
 		}
-
+		ArrayList<RegisteredUser> registeredUsers = (ArrayList) readFile(RUsDB);
 		// open RUs file, import all registered users into here.
-		return (ArrayList<RegisteredUser>) readFile(RUsDB);
+		return registeredUsers;
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Theatre> importTheatres() {
 		// open theatres file, import all into here.
-		return (ArrayList<Theatre>) readFile(theatresDB);
+		return (ArrayList) readFile(theatresDB);
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Movie> importMovies() {
-		return (ArrayList<Movie>) readFile(moviesDB);
+		return (ArrayList) readFile(moviesDB);
 	}
 
 	@SuppressWarnings("unchecked")
 	ArrayList<Showtime> importShowtimes() { // currently does nothing, as showtimes are tied to a movie.
-		return (ArrayList<Showtime>) readFile(showtimesDB);
+		return (ArrayList) readFile(showtimesDB);
 	}
 
 	ArrayList<Seat> importSeats() { // currently does nothing as seats are tied to a showtime.
