@@ -159,8 +159,10 @@ public class MoviesGUI extends JFrame{
 					newSeatListData = new String[selectedShowtime.getSeatList().size()];
 					int i = 0;
 					for(Seat s : selectedShowtime.getSeatList()) {
-						newSeatListData[i] = s.getID();
-						i++;
+						if(s.checkAvailablity()) {
+							newSeatListData[i] = s.getID();
+							i++;
+						}
 					}
 				}
 				else {
@@ -173,8 +175,10 @@ public class MoviesGUI extends JFrame{
 					newSeatListData = new String[unregisteredUserSeats.size()];
 					int i = 0;
 					for(Seat s : unregisteredUserSeats) {
-						newSeatListData[i] = s.getID();
-						i++;
+						if(s.checkAvailablity()) {
+							newSeatListData[i] = s.getID();
+							i++;
+						}
 					}
 				}
 
