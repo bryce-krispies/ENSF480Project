@@ -44,4 +44,13 @@ public class Theatre implements Serializable{
     public String getName() {
         return name;
     }
+    
+    public Movie getMovie(String movieName) {
+        for (Movie m : movies) {
+        	if(m.getName().equals(movieName)) {
+        		return m;
+        	}
+        }
+        return null;
+    }
 }

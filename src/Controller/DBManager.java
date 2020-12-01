@@ -55,8 +55,8 @@ public class DBManager {
 			// and then lets init the seats for these showtimes.
 
 			for (Showtime s : theseShowtimes) {
-				ArrayList<Ticket> tickets = new ArrayList<Ticket>(9);
-				for (int i = 0; i < 9; i++) {
+				ArrayList<Ticket> tickets = new ArrayList<Ticket>(10);
+				for (int i = 0; i < 10; i++) {
 					Ticket ticket = new Ticket(Integer.toString(j++), 12.00);
 					tickets.add(ticket);
 				}
@@ -69,40 +69,8 @@ public class DBManager {
 		theatre.setMovies(tempMovies);
 	}
 
-	DBManager() {
-		boolean testing = true;
-		// if using sql, connect to db here.
-		// but we are just using serialized files.
-		// so lets go ahead and create some dummy files, so long as they do not exist.
-		if (testing) {
-//			ArrayList<Regi/ve NE"));
-			ArrayList<Theatre> tempTheatres = new ArrayList<Theatre>(); // lets add some fake theatres
-			tempTheatres.add(new Theatre("Chinook", 500));
-//			tempTheatres.add(new Theatre("West Edmonton Mall", 200));
-			ArrayList<Movie> tempMovies = new ArrayList<Movie>(); // lets add some fake movies
-			tempMovies.add(new Movie("Batman", null, "Comic", "A bat struggles to act human"));
-			tempMovies.add(new Movie("Manbat", null, "Documentary", "A human struggles to act like a bat"));
-			tempMovies.add(new Movie("Scream", null, "boo.", "AAAAAAAAAAAAAAAAAH!"));
 
-			for (Movie m : tempMovies) {
-				ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
-				theseShowtimes.add(new Showtime(null, 20));
-				// and then lets init the seats for these showtimes.
-				for (Showtime s : theseShowtimes) {
-					s.setSeats();
-				}
-				m.setShowtime(theseShowtimes);
-			}
-
-			tempTheatres.get(0).setMovies(tempMovies);
-
-//			writeFile(RUsDB, tempRegisteredUsers);
-			writeFile(theatresDB, tempTheatres);
-			writeFile(moviesDB, tempMovies);
-		}
-	}
-
-	public User verifyLogin(String email, String password) { // TODO Use HashMap<Map<String, String>, RegisteredUser>
+	public User verifyLogin(String email, String password) { //TODO Use HashMap<Map<String, String>, RegisteredUser>
 		ArrayList<RegisteredUser> rUsers = importRU();
 
 		for (RegisteredUser ru : rUsers) {
@@ -113,19 +81,28 @@ public class DBManager {
 
 		return null;
 	}
-
-	public User verifyRegistration(String email, String cardNumber) {
+	
+	public User verifyRegistration(String name, String email, String password, String cardNumber, String cvv, 
+			String expiryDate, String address, Cart cart) {
 		ArrayList<RegisteredUser> rUsers = importRU();
 		for (RegisteredUser ru : rUsers) {
 			if (ru.getEmail().equals(email)) {
 				return null;
 			}
 		}
-
-		// TODO: Check if cardNumber is not in database; If yes, return null
-		// TODO: Check if cardNumber has enough funds; If no, return null
-
-		// TODO: Create user in database, then return the user object
+		
+		//TODO: Check if cardNumber is not in database; If yes, return null
+		//TODO: Check if cardNumber has enough funds; If no, return null
+		
+		
+		//TODO: Create user in database, then return the user object
+		
+//		RegisteredUser newUser = new RegisteredUser(name, email, password, cardNumber, cvv, expiryDate, address);
+//		rUsers.add(newUser);
+//		setRU(rUsers);
+//		
+//		return newUser;
+		
 		return null;
 	}
 
@@ -135,14 +112,10 @@ public class DBManager {
 		File f = new File(RUsDB);
 		if (!f.exists() && !f.isDirectory()) {// if the file dos not exist yet
 			ArrayList<RegisteredUser> tempRUs = new ArrayList<RegisteredUser>();
-			tempRUs.add(new RegisteredUser("Bob Roberts", "password",
-					new Credit("a8s8fubpz", 19.99, LocalDateTime.now()), new Cart(),
+			tempRUs.add(new RegisteredUser("Bob Roberts",  "bob.roberts@example.com", "password", new Cart(),
 					new CreditCard("1234567890123456", 28, "11/20", "Credit Union"), "Cyprus Street"));
-			tempRUs.add(new RegisteredUser("Billy Bob", "p@s5w0rD",
-					new Credit("zuyfnw0xc", 16.99, LocalDateTime.now()), new Cart(),
+			tempRUs.add(new RegisteredUser("Billy Bob", "billy.bob@example.com", "p@s5w0rD", , new Cart(),
 					new CreditCard("1724879283938218", 735, "12/22", "Bank"), "Bob's Drive"));
-			tempRUs.get(0).setEmail("bob.roberts@example.com");
-			tempRUs.get(1).setEmail("billy.bob@example.com");
 			setRU(tempRUs);
 		}
 		ArrayList<RegisteredUser> registeredUsers = (ArrayList) readFile(RUsDB);

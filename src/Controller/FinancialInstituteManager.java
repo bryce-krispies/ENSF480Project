@@ -14,7 +14,7 @@ public class FinancialInstituteManager {
 		File f = new File("CreditCard.db");
 		if(!f.exists() && !f.isDirectory()) {//if the file dos not exist yet
 			ArrayList<CreditCard> fakeCreditCards = new ArrayList<CreditCard>();
-			fakeCreditCards.add(new CreditCard("1234567890123456", 28, "11/20", "Credit Union"));
+			fakeCreditCards.add(new CreditCard("1234567890123456", 286, "11/20", "Credit Union"));
 			fakeCreditCards.add(new CreditCard("1724879283938218", 735, "12/22", "Bank"));
 			fakeCreditCards.add(new CreditCard("2768102834748917", 198, "04/24", "Bank"));
 			fakeCreditCards.add(new CreditCard("1724879283938218", 735, "09/22", "Credit Union"));

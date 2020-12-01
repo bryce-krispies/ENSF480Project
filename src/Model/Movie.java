@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Movie implements Serializable{
@@ -56,4 +57,15 @@ public class Movie implements Serializable{
             return true;
         return false;
     }
+    
+    public Showtime getSpecificShowtime(String specificShowtime) {
+    	for(Showtime s : showTimes) {
+    		if(s.getTime().format(DateTimeFormatter.ofPattern("h:mm a")).equals(specificShowtime)) {
+    			return s;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
 }

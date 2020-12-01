@@ -4,19 +4,13 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = -1327873282437637171L;
+	private Cart cart;
 
-	private String email;
-	
-	public User() {
-		super();
-		email = "bryce.cayanan1@ucalgary.ca";
-	}
-	
-	public String getEmail() {
-		return email;
+	public Cart getCart() {
+		return cart;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 }

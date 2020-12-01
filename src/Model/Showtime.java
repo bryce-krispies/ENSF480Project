@@ -40,7 +40,6 @@ public class Showtime implements Serializable{
         this.seats = seats;
     }
 
-    // Might not need this
     public Seat getSeat(String id) {
         for (Seat seat : seats) {
             if (seat.getID() == id)
@@ -56,19 +55,13 @@ public class Showtime implements Serializable{
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
-
+        
+        //TODO Fix
         for (; i < numOfCustomers; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
-        
-        //TODO Remove
-//        for(int j = 0; j < seats.size(); j++) {
-//        	System.out.println(seats.size());
-//        	System.out.println(seats.get(j).getEnumType());
-//        }
-        
     }
     
     public void setTickets(ArrayList<Ticket> tickets) {

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 public class RegisterGUI extends JFrame {
 	
+	private JTextField nameField;
 	private JTextField emailField;
 	private JTextField cardNumField;
 	private JTextField cvvField;
@@ -42,6 +43,8 @@ public class RegisterGUI extends JFrame {
 	    add(BorderLayout.SOUTH, buttonBar);
 	    
 	    JPanel inputArea = new JPanel(new GridLayout(0, 2));
+	    JLabel nameLabel = new JLabel("  Enter Email");
+	    nameField = new JTextField(10);
 	    JLabel emailLabel = new JLabel("  Enter Email");
 	    emailField = new JTextField(10);
 	    JLabel passwordLabel = new JLabel("  Enter Password");
