@@ -50,13 +50,12 @@ public class Showtime implements Serializable{
 
     public void setSeats() {
         int i = 0;
-        for (; i < (numOfCustomers * 0.9); i++) {
+        for (; i < (int)(numOfCustomers * 0.9); i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forEveryone, true);
             seats.add(seat);
             tickets.get(i).setSeat(seat);
         }
         
-        //TODO Fix
         for (; i < numOfCustomers; i++) {
             Seat seat = new Seat(tickets.get(i), Integer.toString(i), Seat.type.forRegUser, true);
             seats.add(seat);

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -25,8 +26,6 @@ public class CartGUI extends JFrame{
 	private JButton exitButton;
 	private JButton proceedButton;
 	
-	private JComboBox<String> selectMovie;
-	
 	private ArrayList<Ticket> tickets;
 	
 	public CartGUI(ArrayList<Ticket> ticketDatabase) {
@@ -35,8 +34,12 @@ public class CartGUI extends JFrame{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		tickets = ticketDatabase;
-		for(Ticket t : tickets) {
-			selectMovie.addItem(t.getID());
+		if(tickets != null && !tickets.isEmpty()) {
+			for(Ticket t : tickets) {
+				cartContents.append(t.getShowtime().getMovie().getName() +" at " 
+						+t.getShowtime().getTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy h:mm a"))
+						+" in seat " +t.getSeat().getID() +"\n");
+			}
 		}
 		
 		cartPanel = new JPanel();
@@ -58,15 +61,6 @@ public class CartGUI extends JFrame{
 		JPanel userInput = new JPanel();
 		userInput.setLayout(new BorderLayout(5, 5));
 		
-		JPanel info2 = new JPanel();
-		info2.setAlignmentX(CENTER_ALIGNMENT);
-		JLabel checkoutInfo = new JLabel("Select a movie to checkout:");
-		info2.add(checkoutInfo);
-		userInput.add(info2, BorderLayout.NORTH);
-		
-		selectMovie = new JComboBox<String>();
-		userInput.add(selectMovie, BorderLayout.CENTER);
-		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setAlignmentX(CENTER_ALIGNMENT);
 		exitButton = new JButton("Exit");
@@ -81,20 +75,6 @@ public class CartGUI extends JFrame{
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	
-	public String getCartSelection() {
-		return (String)selectMovie.getSelectedItem();
-	}
-	
-	public void updateCartGUI(String [] tickets) {
-		cartContents.setText(null);
-		for(String s: tickets) {
-			cartContents.append(s + "\n");
-		}
-		
-		setVisible(true);
-	}
-	
 	
 	public void addProceedListener(ActionListener proceedListener) {
 		proceedButton.addActionListener(proceedListener);

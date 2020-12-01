@@ -43,7 +43,7 @@ public class DBManager {
 		for (Movie m : tempMovies) {
 			ArrayList<Showtime> theseShowtimes = new ArrayList<Showtime>(); // lets add some fake showtimes
 			theseShowtimes
-					.add(new Showtime(LocalDateTime.now().plusHours((long) (Math.random() * (12 - 2 + 1) + 2)), 9)); // TODO
+					.add(new Showtime(LocalDateTime.now().plusHours((long) (Math.random() * (12 - 2 + 1) + 2)), 10)); // TODO
 																														// Fix
 																														// timing
 																														// logic

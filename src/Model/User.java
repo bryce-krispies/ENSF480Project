@@ -13,4 +13,9 @@ public class User implements Serializable{
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
+//	
+//	virtual public void getName() {
+//		
+//	}
+	
 }
