@@ -27,10 +27,12 @@ public class TicketPaymentGUI extends JFrame{
 	private JTextArea expiryDate;
 	private JButton payButton;
 	
-	private double price;
+	private double totalPrice;
 	private boolean registered;
 	
-	public TicketPaymentGUI(int width, int height, String ticket, boolean reg) {
+	private ArrayList<Ticket> userCart;
+	
+	public TicketPaymentGUI(int width, int height, ArrayList<Ticket> cart, boolean reg) {
 		super("Pay Ticket");
 		setSize(width, height);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -38,10 +40,15 @@ public class TicketPaymentGUI extends JFrame{
 		paymentPanel = new JPanel();
 		paymentPanel.setLayout(new BoxLayout(paymentPanel, BoxLayout.Y_AXIS));
 		
+		userCart = cart;
 		registered = reg;
-		price = Double.parseDouble(ticket.substring(ticket.lastIndexOf("$") + 1));
 		
-		paymentInfo = new JLabel("Total Due: $" + price);
+		totalPrice = 0;
+		for(Ticket t: userCart) {
+			totalPrice += t.getPrice();
+		}
+		
+		paymentInfo = new JLabel("Total Due: $" + totalPrice);
 		paymentInfo.setFont(new Font(paymentInfo.getFont().getName(), Font.BOLD, 16));
 		paymentInfo.setAlignmentX(CENTER_ALIGNMENT);
 		paymentPanel.add(paymentInfo);
@@ -114,12 +121,12 @@ public class TicketPaymentGUI extends JFrame{
 	}
 	
 	public void updateTotalDue(double newTotal) {
-		price = newTotal;
-		paymentInfo.setText("Total Due: $" + price);
+		totalPrice = newTotal;
+		paymentInfo.setText("Total Due: $" + totalPrice);
 	}
 	
 	public double getPrice() {
-		return price;
+		return totalPrice;
 	}
 	
 	public void setPaymentInfo(String accNum, String cvv, String expDate) {
